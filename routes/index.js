@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express.Router();
-var request = require('request');
-var getFromAxios = require('../services/apiServices'),
+const express = require('express'),
+  router = express.Router(),
+  request = require('request'),
+  getFromAxios = require('../services/apiServices'),
   stubData = require('../stubData/stubData.json'),
   config = require('../config.json')
 

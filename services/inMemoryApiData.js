@@ -1,5 +1,7 @@
 const getFromAxios = require("./apiServices"),
-    config = require('../config.json')
+    stubData = require("../stubData/stubData.json"),
+    config = require('../config.json'),
+    _ = require('lodash');
 
 let baseUrl = config.baseUrl
 
@@ -8,6 +10,7 @@ class InMemoryApiData {
         this.responseData = []
     }
 
+    // Calls the API based on customer guid and returns the response.
     getDataFromApi(customerId) {
         const url = `${baseUrl}${customerId}.json`
         return (getFromAxios(url))
@@ -22,6 +25,16 @@ class InMemoryApiData {
             }
             );
     };
+
+    // Filters over data and returns IDs of accounts who are in debt.
+    getAccountsInDebt() {
+        this.responseData = stubData.accounts
+        const accountsInDebt = _.filter(this.responseData, function (o) { return o.balance <= 0});
+        const output = _.mapValues(accountsInDebt, function (item) {
+            return item.id
+        });
+        return output
+    }
 }
 
 module.exports = InMemoryApiData;
