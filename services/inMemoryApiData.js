@@ -30,8 +30,8 @@ class InMemoryApiData {
     getAccountHolderBalance(accountId) {
         this.responseData = stubData.accounts
         const userAccount = _.filter(this.responseData, function (o) { return o.id == accountId });
-        const output = _.mapValues(userAccount, function (item) {
-            return { balance: item.balance }
+        const output = _.map(userAccount, function (item) {
+            return { "balance": item.balance }
         })
         return output
     }
@@ -40,7 +40,7 @@ class InMemoryApiData {
     getAccountHolderDetails(accountId) {
         this.responseData = stubData.accounts
         const userAccount = _.filter(this.responseData, function (o) { return o.id == accountId });
-        const output = _.mapValues(userAccount, function (item) {
+        const output = _.map(userAccount, function (item) {
             return { "First Name": item.firstname, "Last Name": item.lastname, "Email": item.email, "Telephone": item.telephone }
         })
         return output
@@ -48,10 +48,10 @@ class InMemoryApiData {
     }
 
     // Filters over data and returns IDs of accounts who are in debt.
-    getAccountsInDebt() {
+    getAccountsOverdrawn() {
         this.responseData = stubData.accounts
         const accountsInDebt = _.filter(this.responseData, function (o) { return o.balance <= 0 });
-        const output = _.mapValues(accountsInDebt, function (item) {
+        const output = _.map(accountsInDebt, function (item) {
             return { id: item.id }
         });
         return output
@@ -61,7 +61,7 @@ class InMemoryApiData {
     getAccountForCustomerView(accountId) {
         this.responseData = stubData.accounts
         const userAccount = _.filter(this.responseData, function (o) { return o.id == accountId });
-        const output = _.mapValues(userAccount, function (item) {
+        const output = _.map(userAccount, function (item) {
             return { "First Name": item.firstname, "Last Name": item.lastname, "Email": item.email, "Balance": item.balance }
         })
         return output

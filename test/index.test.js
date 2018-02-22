@@ -24,24 +24,13 @@ describe('App', function () {
         });
     });
 
-    describe('GET /overdrawn', function(){
-        it('responds with status 200', function(done) {
-            chai.request(app)
-            .get('/overdrawn')
-            .end(function(err, res) {
-                expect(res).to.have.status(200);
-                done()
-            });
-        });
-    });
-
     describe('GET /balance/:accountId', function () {
         it('responds with status 200', function(done) {
             chai.request(app)
             .get(`/balance/${accountId}`)
             .end(function(err, res) {
                 expect(res).to.have.status(200);
-                expect(res.body).to.have.property('balance')
+                expect(res.body[0]).to.have.property('balance')
                 done()
             });
         });
@@ -53,10 +42,37 @@ describe('App', function () {
             .get(`/details/${accountId}`)
             .end(function(err, res) {
                 expect(res).to.have.status(200);
-                expect(res.body).to.have.property('First Name')
-                expect(res.body).to.have.property('Last Name')
-                expect(res.body).to.have.property('Email')
-                expect(res.body).to.have.property('Telephone')
+                expect(res.body[0]).to.have.property('First Name')
+                expect(res.body[0]).to.have.property('Last Name')
+                expect(res.body[0]).to.have.property('Email')
+                expect(res.body[0]).to.have.property('Telephone')
+                done()
+            });
+        });
+    });
+
+    describe('GET /overdrawn', function(){
+        it('responds with status 200', function(done) {
+            chai.request(app)
+            .get('/overdrawn')
+            .end(function(err, res) {
+                expect(res).to.have.status(200);
+                expect(res.body[0]).to.have.property('id')
+                done()
+            });
+        });
+    });
+
+    describe('GET /customer/details/:accountId', function () {
+        it('responds with status 200', function(done) {
+            chai.request(app)
+            .get(`/customer/details/${accountId}`)
+            .end(function(err, res) {
+                expect(res).to.have.status(200);
+                expect(res.body[0]).to.have.property('First Name')
+                expect(res.body[0]).to.have.property('Last Name')
+                expect(res.body[0]).to.have.property('Email')
+                expect(res.body[0]).to.have.property('Balance')
                 done()
             });
         });

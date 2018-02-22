@@ -20,70 +20,36 @@ router.get('/notStub', function (req, res, next) {
 
 router.get('/', function (req, res) {
   let inMemoryApiData = new InMemoryApiData
-  let data = inMemoryApiData.responseData = stubResponse
-  res.send(data)
+  inMemoryApiData.responseData = stubResponse
+  res.send(inMemoryApiData.responseData)
+});
+
+router.get('/balance/:id', function (req, res) {
+  let accountId = req.params.id
+  let inMemoryApiData = new InMemoryApiData
+  let balance = inMemoryApiData.getAccountHolderBalance(accountId)
+  res.send(balance)
+});
+
+router.get('/details/:id', function (req, res) {
+  let accountId = req.params.id
+  let inMemoryApiData = new InMemoryApiData
+  let accountDetails = inMemoryApiData.getAccountHolderDetails(accountId)
+  res.send(accountDetails)
 });
 
 router.get('/overdrawn', function(req, res) {
   let inMemoryApiData = new InMemoryApiData
-  let overdrawn = inMemoryApiData.getAccountsInDebt()
+  let overdrawn = inMemoryApiData.getAccountsOverdrawn()
   res.send(overdrawn)
+});
+
+router.get('/customer/details/:id', function (req, res) {
+  let accountId = req.params.id
+  let inMemoryApiData = new InMemoryApiData
+  let accountDetails = inMemoryApiData.getAccountForCustomerView(accountId)
+  res.send(accountDetails)
+
 })
 
-router.get('/balance/:id', function (req, res) {
-  let id = req.params.id
-  let userId = stubResponse.filter(r => r.id === id)[0];
-  let result = { "balance": userId.balance }
-
-  if (!result) {
-    res.sendStatus(404);
-  } else {
-    res.send(result);
-  }
-});
-
-router.get('/details/:id', function (req, res) {
-  let id = req.params.id
-  let userId = stubResponse.filter(r => r.id === id)[0];
-  let result = { "First Name": userId.firstname, "Last Name": userId.lastname, "Email": userId.email, "Telephone": userId.telephone }
-
-  if (!result) {
-    res.sendStatus(404);
-  } else {
-    res.send(result);
-  }
-});
-
 module.exports = router;
-
-// router.get('/:customerid', function (req, res) {
-//   let customerId = req.params.customerid
-//   let url = baseUrl + customerId + ".json"
-//   request(url, function (error, response, body) {
-//     res.header("Content-Type", 'application/json');
-//     res.send(body)
-//   });
-// });
-
-// router.get('/:customerid/balance/:accountid', function (req, res) {
-//   let accountId = req.params.accountid
-//   let userId = data.accounts.filter(r => r.id === accountId)[0];
-//   let result = { "balance": userId.balance }
-
-//   if (!result) {
-//     res.sendStatus(404);
-//   } else {
-//     res.send(result);
-//   }
-// });
-
-
-// router.param('customerid', function (req, res, next, customerid) {
-//   let customerId = req.params.customerid
-//   let url = baseUrl + customerId + ".json"
-//   request(url, function (error, customerid) {
-//     res.header("Content-Type", 'application/json');
-//     req.customerId = customerId
-//     next()
-//   });
-// });
