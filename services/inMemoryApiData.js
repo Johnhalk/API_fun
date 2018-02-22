@@ -26,14 +26,46 @@ class InMemoryApiData {
             );
     };
 
+    // Gets an account holders balance based on a specific account guid
+    getAccountHolderBalance(accountId) {
+        this.responseData = stubData.accounts
+        const userAccount = _.filter(this.responseData, function (o) { return o.id == accountId });
+        const output = _.mapValues(userAccount, function (item) {
+            return { balance: item.balance }
+        })
+        return output
+    }
+
+    // Gets an accounts details based on specific account guid
+    getAccountHolderDetails(accountId) {
+        this.responseData = stubData.accounts
+        const userAccount = _.filter(this.responseData, function (o) { return o.id == accountId });
+        const output = _.mapValues(userAccount, function (item) {
+            return { "First Name": item.firstname, "Last Name": item.lastname, "Email": item.email, "Telephone": item.telephone }
+        })
+        return output
+
+    }
+
     // Filters over data and returns IDs of accounts who are in debt.
     getAccountsInDebt() {
         this.responseData = stubData.accounts
-        const accountsInDebt = _.filter(this.responseData, function (o) { return o.balance <= 0});
+        const accountsInDebt = _.filter(this.responseData, function (o) { return o.balance <= 0 });
         const output = _.mapValues(accountsInDebt, function (item) {
-            return item.id
+            return { id: item.id }
         });
         return output
+    }
+
+    //Get account details intended for customer view
+    getAccountForCustomerView(accountId) {
+        this.responseData = stubData.accounts
+        const userAccount = _.filter(this.responseData, function (o) { return o.id == accountId });
+        const output = _.mapValues(userAccount, function (item) {
+            return { "First Name": item.firstname, "Last Name": item.lastname, "Email": item.email, "Balance": item.balance }
+        })
+        return output
+
     }
 }
 
