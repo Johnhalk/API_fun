@@ -30,7 +30,6 @@ class InMemoryApiData {
     // Gets an account holders balance based on a specific account guid
     getAccountHolderBalance(accountId) {
         const userAccount = _.filter(this.responseData, function (o) { return o.id == accountId });
-        console.log(userAccount)
         const output = _.map(userAccount, function (item) {
             return { "balance": item.balance }
         })
