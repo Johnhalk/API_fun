@@ -1,0 +1,257 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Swagger API documentation",
+        "description": "Documentation for all API routes"
+    },
+    "schemes": [
+        "http"
+    ],
+    "host": "localhost:3000",
+    "basePath": "/",
+    "paths": {
+        "/": {
+            "get": {
+                "tags": [
+                    "API routes"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Gets all current customer information",
+                "description": "Returns a list containing all accounts for that customer.",
+                "responses": {
+                    "200": {
+                        "description": "A list of accounts based on customer guid",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "firstname": {
+                                        "type": "string"
+                                    },
+                                    "lastname": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "balance": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/{customerid}": {
+            "get": {
+                "tags": [
+                    "API routes"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Gets all customer information based on customerid",
+                "description": "Returns a list containing all accounts for that customer.",
+                "parameters": [
+                    {
+                        "name": "customerid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of accounts based on customer guid",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "firstname": {
+                                        "type": "string"
+                                    },
+                                    "lastname": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "balance": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/balance/{accountid}": {
+            "get": {
+                "tags": [
+                    "API routes"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Gets balance of specific account based on account guid",
+                "description": "Returns a list containing all accounts for that customer.",
+                "parameters": [
+                    {
+                        "name": "accountid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns balance of specific account",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "properties": {
+                                    "balance": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/details/{accountid}": {
+            "get": {
+                "tags": [
+                    "API routes"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Gets account details based on account guid",
+                "description": "Returns a list containing all accounts for that customer.",
+                "parameters": [
+                    {
+                        "name": "accountid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns details of specific account",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "properties": {
+                                    "First Name": {
+                                        "type": "string"
+                                    },
+                                    "Last Name": {
+                                        "type": "string"
+                                    },
+                                    "Email": {
+                                        "type": "string"
+                                    },
+                                    "Telephone": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/accounts/overdrawn": {
+            "get": {
+                "tags": [
+                    "API routes"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Returns overdrawn accounts that are currently in the stored customer guid",
+                "description": "Returns a list containing all accounts for that customer.",
+                "responses": {
+                    "200": {
+                        "description": "A list of IDs with accounts overdrawn",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/customer/details/{accountid}": {
+            "get": {
+                "tags": [
+                    "API routes"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Gets account details based on account guid for customer view",
+                "description": "Returns a list containing all accounts for that customer.",
+                "parameters": [
+                    {
+                        "name": "accountid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns details of specific account for a customer view",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "properties": {
+                                    "First Name": {
+                                        "type": "string"
+                                    },
+                                    "Last Name": {
+                                        "type": "string"
+                                    },
+                                    "Email": {
+                                        "type": "string"
+                                    },
+                                    "Balance": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

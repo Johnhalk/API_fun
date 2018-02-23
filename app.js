@@ -9,6 +9,12 @@ const index = require('./routes/index'),
 const app = express();
 const port = process.env.PORT || 3000;
 
+//Swagger setup for API
+const swaggerUi = require('swagger-ui-express'),
+  swaggerDocument = require('./swagger.json');
+
+
+app.use('/swagger-api', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.set(port)
 app.listen(app.get('port'),

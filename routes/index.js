@@ -42,8 +42,8 @@ router.get('/accounts/overdrawn', async function (req, res) {
   res.send(overdrawn)
 });
 
-router.get('/customer/details/:id', async function (req, res) {
-  let accountId = req.params.id
+router.get('/customer/details/:accountid', async function (req, res) {
+  let accountId = req.params.accountid
   await inMemoryApiData.getDataFromApi(customerId)
   let accountDetails = inMemoryApiData.getAccountForCustomerView(accountId)
   res.send(accountDetails)
