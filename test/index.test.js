@@ -110,4 +110,52 @@ describe('App', function () {
                 });
         });
     });
+
+    describe('GET /customer/account', function () {
+        it('responds with status 200 with just firstname parameter', function (done) {
+            let firstName = 'GiAna'
+            chai.request(app)
+                .get(`/customer/account?firstname=${firstName}`)
+                .end(function (err, res) {
+                    expect(res).to.have.status(200);
+                    expect(res.body[0]).to.have.property('id')
+                    expect(res.body[0]).to.have.property('firstname')
+                    expect(res.body[0]).to.have.property('lastname')
+                    expect(res.body[0]).to.have.property('email')
+                    expect(res.body[0]).to.have.property('balance')
+                    done()
+                });
+        });
+
+        it('responds with status 200 with just lastname parameter', function (done) {
+            let lastName = 'David'
+            chai.request(app)
+                .get(`/customer/account?lastname=${lastName}`)
+                .end(function (err, res) {
+                    expect(res).to.have.status(200);
+                    expect(res.body[0]).to.have.property('id')
+                    expect(res.body[0]).to.have.property('firstname')
+                    expect(res.body[0]).to.have.property('lastname')
+                    expect(res.body[0]).to.have.property('email')
+                    expect(res.body[0]).to.have.property('balance')
+                    done()
+                });
+        });
+
+        it('responds with status 200 with firstname and lastname parameters', function (done) {
+            let firstName = 'PIE'
+            let lastName = 'David'
+            chai.request(app)
+                .get(`/customer/account?firstname=${firstName}&lastname=${lastName}`)
+                .end(function (err, res) {
+                    expect(res).to.have.status(200);
+                    expect(res.body[0]).to.have.property('id')
+                    expect(res.body[0]).to.have.property('firstname')
+                    expect(res.body[0]).to.have.property('lastname')
+                    expect(res.body[0]).to.have.property('email')
+                    expect(res.body[0]).to.have.property('balance')
+                    done()
+                });
+        });
+    });
 });

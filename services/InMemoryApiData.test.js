@@ -39,8 +39,10 @@ describe('InMemoryApiData', () => {
         it('should filter through the customer data to return accounts whose balance is less than or equal to zero', () => {
             inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountHolderBalance('1c436428-73bb-46c4-adc9-cd5f2c7d34b4')).toEqual(
-                [{ "balance": "-945.55" }])
-        })
+                [
+                    { "balance": "-945.55" }
+                ]);
+        });
     });
 
     describe('getAccountHolderDetails', () => {
@@ -53,8 +55,8 @@ describe('InMemoryApiData', () => {
                     "Last Name": "Pruitt",
                     "Telephone": "01526 810866",
                 },
-                ])
-        })
+                ]);
+        });
     });
 
     describe('getAccountsOverdrawn', () => {
@@ -96,7 +98,92 @@ describe('InMemoryApiData', () => {
                     "Last Name": "Pruitt",
                     "Balance": "-945.55",
                 },
-                ])
-        })
+                ]);
+        });
+    });
+
+    describe('getAccountByFirstOrLastName', () => {
+        it('should filter through customer data based on a firstname', () => {
+            inMemoryApiData.responseData = stubData.accounts
+            expect(inMemoryApiData.getAccountByFirstOrLastName('Cyrus')).toEqual(
+                [{
+                    "balance": "3,702.54",
+                    "email": "Cy.DAVI5969@dispostable.com",
+                    "firstname": "Cyrus",
+                    "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0a",
+                    "lastname": "David",
+                    "telephone": "01721 578054",
+                },
+                {
+                    "balance": "3,702.54",
+                    "email": "Cy.DAVI5969@dispostable.com",
+                    "firstname": "Cyrus",
+                    "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0a",
+                    "lastname": "Raymond",
+                    "telephone": "01721 578054",
+                },
+                ]);
+        });
+        it('should filter through customer data based on a lastname', () => {
+            inMemoryApiData.responseData = stubData.accounts
+            expect(inMemoryApiData.getAccountByFirstOrLastName('', 'David')).toEqual(
+                [{
+                    "balance": "3,702.54",
+                    "email": "Cy.DAVI5969@dispostable.com",
+                    "firstname": "Cyrus",
+                    "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0a",
+                    "lastname": "David",
+                    "telephone": "01721 578054"
+                },
+                {
+                    "balance": "3,702.54",
+                    "email": "Cy.DAVI5969@dispostable.com",
+                    "firstname": "Pie",
+                    "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0a",
+                    "lastname": "David",
+                    "telephone": "01721 578054"
+                }]);
+        });
+        it('should filter through customer data based on a first and lastname', () => {
+            inMemoryApiData.responseData = stubData.accounts
+            expect(inMemoryApiData.getAccountByFirstOrLastName('Giana', 'Mueller')).toEqual(
+                [{
+                    "balance": "-6,454.72",
+                    "email": "Gian.MUEL3296@yopmail.com",
+                    "firstname": "Giana",
+                    "id": "0dafb276-1620-42ce-bbc5-477209733d5c",
+                    "lastname": "Mueller",
+                    "telephone": "01178 766240"
+                },
+                {
+                    "balance": "302.54",
+                    "email": "Cy.DAVI5969@dispostablety.com",
+                    "firstname": "Giana",
+                    "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0addd",
+                    "lastname": "Mueller",
+                    "telephone": "01721 5780543"
+                }]);
+        });
+
+        it('should filter through customer data based on a first and lastname regardless of case sensitvity', () => {
+            inMemoryApiData.responseData = stubData.accounts
+            expect(inMemoryApiData.getAccountByFirstOrLastName('GIANA', 'MueLLer')).toEqual(
+                [{
+                    "balance": "-6,454.72",
+                    "email": "Gian.MUEL3296@yopmail.com",
+                    "firstname": "Giana",
+                    "id": "0dafb276-1620-42ce-bbc5-477209733d5c",
+                    "lastname": "Mueller",
+                    "telephone": "01178 766240"
+                },
+                {
+                    "balance": "302.54",
+                    "email": "Cy.DAVI5969@dispostablety.com",
+                    "firstname": "Giana",
+                    "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0addd",
+                    "lastname": "Mueller",
+                    "telephone": "01721 5780543"
+                }]);
+        });
     });
 });

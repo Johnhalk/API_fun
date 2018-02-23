@@ -48,6 +48,14 @@ router.get('/customer/details/:accountid', async function (req, res) {
   let accountDetails = inMemoryApiData.getAccountForCustomerView(accountId)
   res.send(accountDetails)
 
-})
+});
+
+router.get('/customer/account', async function (req, res) {
+  let firstName = req.query.firstname
+  let lastName = req.query.lastname
+  await inMemoryApiData.getDataFromApi(customerId)
+  let accounts = inMemoryApiData.getAccountByFirstOrLastName(firstName, lastName)
+  res.send(accounts)
+});
 
 module.exports = router;

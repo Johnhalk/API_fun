@@ -64,6 +64,25 @@ class InMemoryApiData {
         return output
 
     }
+    // Get account details filtered by first name and/or last name
+    getAccountByFirstOrLastName(firstName = '', lastName = '') {
+        if (firstName != '' && lastName != '') {
+            const userByFirstName = _.filter(this.responseData, function (o) { return o.firstname.toLowerCase() == firstName.toLowerCase() });
+            const result = _.filter(userByFirstName, function (o) { return o.lastname.toLowerCase() == lastName.toLowerCase() })
+            return result
+
+        } else if (firstName != '') {
+            const result = _.filter(this.responseData, function (o) { return o.firstname.toLowerCase() == firstName.toLocaleLowerCase() });
+            return result
+
+        } else if (lastName != '') {
+            const result = _.filter(this.responseData, function (o) { return o.lastname.toLowerCase() == lastName.toLowerCase() })
+            return result
+
+        } else {
+            return
+        }
+    }
 }
 
 module.exports = InMemoryApiData;
