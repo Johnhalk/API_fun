@@ -3,6 +3,8 @@ let chai = require('chai'),
     expect = chai.expect,
     app = require('../app'),
     should = chai.should(),
+    stubData = require('../stubData/stubData.json'),
+    moxios = require('moxios'),
     config = require('../config.json')
 
 chai.use(chaiHttp);
@@ -11,6 +13,25 @@ describe('App', function () {
 
     let customerId = config.baseCustomerId
     let accountId = '06d1dc7a-2f0d-4c7d-a90e-c4c6fa27edce'
+
+
+    beforeEach(() => {
+        moxios.install()
+        const expectedResults = stubData
+        moxios.wait(() => {
+            const request = moxios
+                .requests
+                .mostRecent();
+            request.respondWith({
+                status: 200,
+                response: expectedResults
+            });
+        });
+    });
+
+    afterEach(() => {
+        moxios.uninstall()
+    });
 
     describe('GET /', function () {
         it('responds with status 200', function (done) {
