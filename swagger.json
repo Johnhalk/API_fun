@@ -261,8 +261,8 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Gets account details based on account guid for customer view",
-                "description": "Returns a list containing all accounts for that customer.",
+                "summary": "Gets account details based on optional firstname  and or lastname parameters",
+                "description": "Returns the accounts matching firstname and or lastname.",
                 "parameters": [
                     {
                         "name": "firstname",
@@ -279,7 +279,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Returns details of specific account for a customer view",
+                        "description": "Returns details of specific accounts based on first and or last name",
                         "schema": {
                             "type": "array",
                             "items": {
