@@ -16,6 +16,7 @@ class InMemoryApiData {
         return (getFromAxios(url))
             .then(
             response => {
+                this.responseData = []
                 this.responseData = this.responseData.concat(response.data.accounts)
             }
             )
@@ -28,7 +29,6 @@ class InMemoryApiData {
 
     // Gets an account holders balance based on a specific account guid
     getAccountHolderBalance(accountId) {
-        this.responseData = stubData.accounts
         const userAccount = _.filter(this.responseData, function (o) { return o.id == accountId });
         const output = _.map(userAccount, function (item) {
             return { "balance": item.balance }
@@ -38,7 +38,6 @@ class InMemoryApiData {
 
     // Gets an accounts details based on specific account guid
     getAccountHolderDetails(accountId) {
-        this.responseData = stubData.accounts
         const userAccount = _.filter(this.responseData, function (o) { return o.id == accountId });
         const output = _.map(userAccount, function (item) {
             return { "First Name": item.firstname, "Last Name": item.lastname, "Email": item.email, "Telephone": item.telephone }
@@ -49,7 +48,6 @@ class InMemoryApiData {
 
     // Filters over data and returns IDs of accounts who are in debt.
     getAccountsOverdrawn() {
-        this.responseData = stubData.accounts
         const accountsInDebt = _.filter(this.responseData, function (o) { return o.balance <= 0 });
         const output = _.map(accountsInDebt, function (item) {
             return { id: item.id }
@@ -59,7 +57,6 @@ class InMemoryApiData {
 
     //Get account details intended for customer view
     getAccountForCustomerView(accountId) {
-        this.responseData = stubData.accounts
         const userAccount = _.filter(this.responseData, function (o) { return o.id == accountId });
         const output = _.map(userAccount, function (item) {
             return { "First Name": item.firstname, "Last Name": item.lastname, "Email": item.email, "Balance": item.balance }

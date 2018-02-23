@@ -1,3 +1,4 @@
 {
-    "baseUrl": "https://mvf-devtest-s3api.s3-eu-west-1.amazonaws.com/"
+    "baseUrl": "https://mvf-devtest-s3api.s3-eu-west-1.amazonaws.com/",
+    "baseCustomerId": "a4a06bb0-3fbe-40bd-9db2-f68354ba742f"
 }
