@@ -3,8 +3,7 @@ const express = require('express'),
   logger = require('morgan'),
   bodyParser = require('body-parser')
 
-const index = require('./routes/index'),
-  users = require('./routes/users')
+const index = require('./routes/index')
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -12,10 +11,9 @@ const port = process.env.PORT || 3000;
 //Swagger setup for API
 const swaggerUi = require('swagger-ui-express'),
   swaggerDocument = require('./swagger.json');
-
-
 app.use('/swagger-api', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+//Port configuration
 app.set(port)
 app.listen(app.get('port'),
   function () {
@@ -34,8 +32,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Routes defined for api
 app.use('/', index);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
