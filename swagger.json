@@ -252,6 +252,62 @@
                     }
                 }
             }
+        },
+        "/customer/account": {
+            "get": {
+                "tags": [
+                    "API routes"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Gets account details based on account guid for customer view",
+                "description": "Returns a list containing all accounts for that customer.",
+                "parameters": [
+                    {
+                        "name": "firstname",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lastname",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns details of specific account for a customer view",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "firstname": {
+                                        "type": "string"
+                                    },
+                                    "lastname": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "balance": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
