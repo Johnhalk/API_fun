@@ -94,7 +94,7 @@ class InMemoryApiData {
         }
     }
 
-    //Remove commas from balance strings
+    //Remove commas from balance strings and turns them into integers
     getNoCommasAndPutToFloat() {
         const removeCommasFromBalance = _.map(this.responseData, function (item) {
             return { "id": item.id, "balance": parseFloat((item.balance.toString().replace(/,/g, ''))) }

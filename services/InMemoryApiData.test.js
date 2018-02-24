@@ -173,6 +173,24 @@ describe('InMemoryApiData', () => {
         });
     });
 
+    describe('getNoCommasAndPutToFloat', () => {
+        it('should filter through account data and return string balance as an integer with no commas', () => {
+            inMemoryApiData.responseData =
+                [{
+                    "id": "0dafb276-1620-42ce-bbc5-477209733d5c",
+                    "email": "Lil.PRU8222@mailinator.com",
+                    "firstname": "Lillie",
+                    "lastname": "Pruitt",
+                    "telephone": "01526 810866",
+                    "balance": "5,436.98"
+                },
+                ];
+            expect(inMemoryApiData.getNoCommasAndPutToFloat(inMemoryApiData.responseData)).toEqual(
+                [{ "balance": 5436.98, "id": "0dafb276-1620-42ce-bbc5-477209733d5c" }]
+            )
+        });
+    });
+
     describe('getAccountFilteredByBalance', () => {
         it('should filter through account data based on a minimum balance amount', () => {
             inMemoryApiData.responseData = stubData.accounts

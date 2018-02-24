@@ -45,7 +45,7 @@ describe('App', function () {
         });
     });
 
-    describe('GET /customerid', function () {
+    describe('GET /:customerid', function () {
         it('responds with status 200', function (done) {
             chai.request(app)
                 .get(`/${customerId}`)
