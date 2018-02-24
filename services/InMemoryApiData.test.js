@@ -145,21 +145,15 @@ describe('InMemoryApiData', () => {
             inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountByFirstOrLastName('Cyrus')).toEqual(
                 [{
-                    "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0a3",
-                },
-                {
-                    "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0a2",
-                },
+                    "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0a",
+                }
                 ]);
         });
         it('should filter through account data based on a lastname', () => {
             inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountByFirstOrLastName('', 'David')).toEqual(
                 [{
-                    "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0a3",
-                },
-                {
-                    "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0a4",
+                    "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0a",
                 }]);
         });
         it('should filter through account data based on a first and lastname', () => {
@@ -167,9 +161,6 @@ describe('InMemoryApiData', () => {
             expect(inMemoryApiData.getAccountByFirstOrLastName('Giana', 'Mueller')).toEqual(
                 [{
                     "id": "0dafb276-1620-42ce-bbc5-477209733d5c"
-                },
-                {
-                    "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0addd"
                 }]);
         });
 
@@ -178,9 +169,6 @@ describe('InMemoryApiData', () => {
             expect(inMemoryApiData.getAccountByFirstOrLastName('GIANA', 'MueLLer')).toEqual(
                 [{
                     "id": "0dafb276-1620-42ce-bbc5-477209733d5c"
-                },
-                {
-                    "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0addd"
                 }]);
         });
     });

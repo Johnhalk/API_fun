@@ -135,8 +135,8 @@ describe('App', function () {
         });
 
         it('responds with status 200 with firstname and lastname parameters', function (done) {
-            let firstName = 'PIE'
-            let lastName = 'David'
+            let firstName = 'Curtis'
+            let lastName = 'COTTON'
             chai.request(app)
                 .get(`/customer/account?firstname=${firstName}&lastname=${lastName}`)
                 .end(function (err, res) {

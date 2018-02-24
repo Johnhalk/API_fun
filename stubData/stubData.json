@@ -19,25 +19,9 @@
             "balance": "-3,521.04"
         },
         {
-            "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0a3",
+            "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0a",
             "firstname": "Cyrus",
             "lastname": "David",
-            "email": "Cy.DAVI5969@dispostable.com",
-            "telephone": "01721 578054",
-            "balance": "543.02"
-        },
-        {
-            "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0a4",
-            "firstname": "Pie",
-            "lastname": "David",
-            "email": "Cy.DAVI5969@dispostable.com",
-            "telephone": "01721 578054",
-            "balance": "3,702.54"
-        },
-        {
-            "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0a2",
-            "firstname": "Cyrus",
-            "lastname": "Raymond",
             "email": "Cy.DAVI5969@dispostable.com",
             "telephone": "01721 578054",
             "balance": "3,702.54"
@@ -49,14 +33,6 @@
             "email": "Gian.MUEL3296@yopmail.com",
             "telephone": "01178 766240",
             "balance": "-6,454.72"
-        },
-        {
-            "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0addd",
-            "firstname": "Giana",
-            "lastname": "Mueller",
-            "email": "Cy.DAVI5969@dispostablety.com",
-            "telephone": "01721 5780543",
-            "balance": "302.54"
         },
         {
             "id": "55f15c00-639f-4585-9430-a8d6a2ae86f7",
