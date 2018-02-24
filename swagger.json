@@ -308,6 +308,50 @@
                     }
                 }
             }
+        },
+        "/customer/account/balance": {
+            "get": {
+                "tags": [
+                    "API routes"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Gets account details based on optional minamount  and or lastname maxamount",
+                "description": "Returns the accounts matching minamount and or maxamount.",
+                "parameters": [
+                    {
+                        "name": "minamount",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "maxamount",
+                        "in": "query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns details of specific accounts based on min and or max amounts",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "balance": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

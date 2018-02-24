@@ -119,10 +119,6 @@ describe('App', function () {
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
                     expect(res.body[0]).to.have.property('id')
-                    expect(res.body[0]).to.have.property('firstname')
-                    expect(res.body[0]).to.have.property('lastname')
-                    expect(res.body[0]).to.have.property('email')
-                    expect(res.body[0]).to.have.property('balance')
                     done()
                 });
         });
@@ -134,10 +130,6 @@ describe('App', function () {
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
                     expect(res.body[0]).to.have.property('id')
-                    expect(res.body[0]).to.have.property('firstname')
-                    expect(res.body[0]).to.have.property('lastname')
-                    expect(res.body[0]).to.have.property('email')
-                    expect(res.body[0]).to.have.property('balance')
                     done()
                 });
         });
@@ -150,10 +142,42 @@ describe('App', function () {
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
                     expect(res.body[0]).to.have.property('id')
-                    expect(res.body[0]).to.have.property('firstname')
-                    expect(res.body[0]).to.have.property('lastname')
-                    expect(res.body[0]).to.have.property('email')
-                    expect(res.body[0]).to.have.property('balance')
+                    done()
+                });
+        });
+    });
+
+    describe('GET /customer/account/balance', function () {
+        it('responds with status 200 with just minamount parameter', function (done) {
+            let minAmount = '100'
+            chai.request(app)
+                .get(`/customer/account/balance?minamount=${minAmount}`)
+                .end(function (err, res) {
+                    expect(res).to.have.status(200);
+                    expect(res.body[0]).to.have.property('id')
+                    done()
+                });
+        });
+
+        it('responds with status 200 with just maxamount parameter', function (done) {
+            let maxAmount = '200'
+            chai.request(app)
+                .get(`/customer/account/balance?maxamount=${maxAmount}`)
+                .end(function (err, res) {
+                    expect(res).to.have.status(200);
+                    expect(res.body[0]).to.have.property('id')
+                    done()
+                });
+        });
+
+        it('responds with status 200 with minamount and maxamount parameters', function (done) {
+            let minAmount = '100'
+            let maxAmount = '200'
+            chai.request(app)
+                .get(`/customer/account/balance?minamount=${minAmount}&maxamount=${maxAmount}`)
+                .end(function (err, res) {
+                    expect(res).to.have.status(200);
+                    expect(res.body[0]).to.have.property('id')
                     done()
                 });
         });

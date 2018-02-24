@@ -48,7 +48,7 @@ class InMemoryApiData {
 
     // Filters over data and returns IDs of accounts who are in debt.
     getAccountsOverdrawn() {
-        const accountsInDebt = _.filter(this.responseData, function (o) { return o.balance <= 0 });
+        const accountsInDebt = _.filter(this.getNoCommasAndPutToFloat(), function (o) { return o.balance <= 0 });
         const output = _.map(accountsInDebt, function (item) {
             return { id: item.id }
         });
@@ -64,19 +64,56 @@ class InMemoryApiData {
         return output
 
     }
+
     // Get account details filtered by first name and/or last name
     getAccountByFirstOrLastName(firstName = '', lastName = '') {
         if (firstName != '' && lastName != '') {
             const userByFirstName = _.filter(this.responseData, function (o) { return o.firstname.toLowerCase() == firstName.toLowerCase() });
-            const result = _.filter(userByFirstName, function (o) { return o.lastname.toLowerCase() == lastName.toLowerCase() })
-            return result
+            const resultByLastName = _.filter(userByFirstName, function (o) { return o.lastname.toLowerCase() == lastName.toLowerCase() });
+            const output = _.map(resultByLastName, function (item) {
+                return { "id": item.id }
+            })
+            return output
 
         } else if (firstName != '') {
             const result = _.filter(this.responseData, function (o) { return o.firstname.toLowerCase() == firstName.toLocaleLowerCase() });
-            return result
+            const output = _.map(result, function (item) {
+                return { "id": item.id }
+            })
+            return output
 
         } else if (lastName != '') {
-            const result = _.filter(this.responseData, function (o) { return o.lastname.toLowerCase() == lastName.toLowerCase() })
+            const result = _.filter(this.responseData, function (o) { return o.lastname.toLowerCase() == lastName.toLowerCase() });
+            const output = _.map(result, function (item) {
+                return { "id": item.id }
+            })
+            return output
+
+        } else {
+            return
+        }
+    }
+
+    //Remove commas from balance strings
+    getNoCommasAndPutToFloat() {
+        const removeCommasFromBalance = _.map(this.responseData, function (item) {
+            return { "id": item.id, "balance": parseFloat((item.balance.toString().replace(/,/g, ''))) }
+        })
+        return removeCommasFromBalance
+    }
+
+    // Get account details filtered by amount in balance
+    getAccountFilteredByBalance(minAmount = '', maxAmount = '') {
+        if (minAmount != '' && maxAmount != '') {
+            const filterMinimum = _.filter(this.getNoCommasAndPutToFloat(), function(n) {return n.balance >= minAmount})
+            const filtered = _.filter(filterMinimum, function(n) {return n.balance <= maxAmount})
+            return filtered
+        } else if (minAmount != '') {
+            const result = _.filter(this.getNoCommasAndPutToFloat(), function (o) { return o.balance >= minAmount });
+            return result
+
+        } else if (maxAmount != '') {
+            const result = _.filter(this.getNoCommasAndPutToFloat(), function (o) { return o.balance <= maxAmount });
             return result
 
         } else {
