@@ -104,7 +104,7 @@ Outputs: account guids ordered by balance
 ![Imgur](https://imgur.com/okw50PZ.png)
 - Can return account detail based on prtially spelt/misspelt first and last names for a 50% confidence metric
 - ```(GET /customerId/customer/account?firstname=firstName&lastname=lastName)```
-![Imgur](https://imgur.com/hflzkNg.png)
+![Imgur](https://imgur.com/FwGiAc5.png)
 - Can filter accounts based on a query min balance amount ordered from highest balance to lowest.
 - ```(GET /customerId/customer/account/balance?minamount=minAmount)```
 ![Imgur](https://imgur.com/HTRu4E2.png)
