@@ -70,52 +70,52 @@ Outputs: account guids ordered by balance
 - ``` npm run start ``` to start application
 ![Imgur](https://imgur.com/LAkRjy5.png)
 - Application starts at localhost:3000
-- (GET /)
+- ```(GET /)```
 ![Imgur](https://imgur.com/FneWlTN.png)
 - Place your customer GUID in the url to access data on all accounts for that customer.
-- (GET /customerId)
+- ```(GET /customerId)```
 ![Imgur](https://imgur.com/ZmE9Z9P.png)
 - Search an accounts balance based on specific account GUID
-- (GET /customerId/balance/accountId)
+- ```(GET /customerId/balance/accountId)```
 ![Imgur](https://imgur.com/F0dlDOu.png)
 - Can return specific account details based on specific account GUID
-- (GET /customerId/details/accountId)
+- ```(GET /customerId/details/accountId)```
 ![Imgur](https://imgur.com/R0ZGEpx.png)
 - Can return which accounts are overdrawn for customers account details
-- (GET /customerId/accounts/overdrawn)
+- ```(GET /customerId/accounts/overdrawn)```
 ![Imgur](https://imgur.com/gED2HHu.png)
 - Can return account specifc details for a customer view based on account GUID
-- (GET /customerId/customer/details/accountId)
+- ```(GET /customerId/customer/details/accountId)```
 ![Imgur](https://imgur.com/6c0KfbI.png)
 - Can return filtered account details based on first name query.
-- (GET /customerId/customer/account?firstname=firstName)
+- ```(GET /customerId/customer/account?firstname=firstName)```
 ![Imgur](https://imgur.com/wP4mqqY.png)
 - Can return filtered account details based on last name query.
-- (GET /customerId/customer/account?lastname=lastName)
+- ```(GET /customerId/customer/account?lastname=lastName)```
 ![Imgur](https://imgur.com/KZGKQaL.png)
 - Can return account detail based on first and last name query.
-- (GET /customerId/customer/account?firstname=firstName&lastname=lastName)
+- ```(GET /customerId/customer/account?firstname=firstName&lastname=lastName)```
 ![Imgur](https://imgur.com/uR2qo2i.png)
 - Can return account detail based on partially spelt/misspelt first names for a 50% confidence metric.
-- (GET /customerId/customer/account?firstname=firstName)
+- ```(GET /customerId/customer/account?firstname=firstName)```
 ![Imgur](https://imgur.com/5k83aRK.png)
 - Can return account detail based on partially spelt/misspelt  lastnames for a 50% confidence metric.
-- (GET /customerId/customer/account?lastname=lastName)
+- ```(GET /customerId/customer/account?lastname=lastName)```
 ![Imgur](https://imgur.com/8UHwysr.png)
 - Can return account detail based on prtially spelt/misspelt first and last names for a 50% confidence metric
-- (GET /customerId/customer/account?firstname=firstName&lastname=lastName)
+- ```(GET /customerId/customer/account?firstname=firstName&lastname=lastName)```
 ![Imgur](https://imgur.com/8UHwysr.png)
 - Can filter accounts based on a query min balance amount ordered from highest balance to lowest.
-- (GET /customerId/customer/account/balance?minamount=minAmount)
+- ```(GET /customerId/customer/account/balance?minamount=minAmount)```
 ![Imgur](https://imgur.com/HTRu4E2.png)
 - Can filter accounts based on a query max balance amount ordered from highest balance to lowest.
-- (GET /customerId/customer/account/balance?maxamount=maxAmount)
+- ```(GET /customerId/customer/account/balance?maxamount=maxAmount)```
 ![Imgur](https://imgur.com/fkJVRFF.png)
 - Can filter accounts based on a query min and max balance amount ordered from highest balance to lowest.
-- (GET /customerId/customer/account/balance?minamount=minAmount&maxamount=maxAmount)
+- ```(GET /customerId/customer/account/balance?minamount=minAmount&maxamount=maxAmount)```
 ![Imgur](https://imgur.com/EY21TB4.png)
 - ALL routes are defined in Swagger with swagger descriptions and details for a good indepth understanding of the application - Try it out!
-- (GET /swagger-api)
+- ```(GET /swagger-api)```
 ![Imgur](https://imgur.com/1abSDvQ.png)
 
 ## Testing
