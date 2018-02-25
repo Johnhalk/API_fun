@@ -1,5 +1,5 @@
 # Customer_API_Handler
-[Introduction](#introduction) | [Technologies](#technologies) | [Installation](#installation) | [Working Overview](#screenshots) |
+[Introduction](#introduction) | [Technologies](#technologies) | [Installation](#installation) | [Usage](#usage) |
 
 ## Introduction
 This is a application written in Node.js using the Express framework, tested in Mocha, Chai, Moxios.
@@ -118,4 +118,9 @@ Outputs: account guids ordered by balance
 - (GET /swagger-api)
 ![Imgur](https://imgur.com/1abSDvQ.png)
 
+## Testing
 
+- Technologies used to test are Mocha, Chai, Sinon & Moxios.
+- ran with ``` npm test ``` there are 36 tests, testing all functions used in the application as well as testing all applicable routes.
+![Imgur](https://imgur.com/M1eLsTb.png)
+![Imgur](https://imgur.com/wBw6qap.png)

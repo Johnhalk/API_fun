@@ -1,6 +1,5 @@
 const moxios = require('moxios'),
     expect = require('expect'),
-    sinon = require('sinon'),
     InMemoryApiData = require('./inMemoryApiData'),
     stubData = require('../stubData/stubData.json'),
     config = require('../config.json')

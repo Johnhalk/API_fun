@@ -144,6 +144,39 @@ describe('App', function () {
                 });
         });
     });
+    it('responds with status 200 with just firstname parameter mispelt or partial', function (done) {
+        let firstName = 'GiAn'
+        chai.request(app)
+            .get(`/${customerId}/customer/account?firstname=${firstName}`)
+            .end(function (err, res) {
+                expect(res).to.have.status(200);
+                expect(res.body[0]).to.have.property('id')
+                done()
+            });
+    });
+
+    it('responds with status 200 with just lastname parameter mispelt or partial', function (done) {
+        let lastName = 'Davi'
+        chai.request(app)
+            .get(`/${customerId}/customer/account?lastname=${lastName}`)
+            .end(function (err, res) {
+                expect(res).to.have.status(200);
+                expect(res.body[0]).to.have.property('id')
+                done()
+            });
+    });
+
+    it('responds with status 200 with firstname and lastname parameters mispelt or partial', function (done) {
+        let firstName = 'Durtis'
+        let lastName = 'COTT'
+        chai.request(app)
+            .get(`/${customerId}/customer/account?firstname=${firstName}&lastname=${lastName}`)
+            .end(function (err, res) {
+                expect(res).to.have.status(200);
+                expect(res.body[0]).to.have.property('id')
+                done()
+            });
+    });
 
     describe('GET /:customerid/customer/account/balance', function () {
         it('responds with status 200 with just minamount parameter', function (done) {
