@@ -1,5 +1,7 @@
 # Customer_API_Handler
-[Introduction](#introduction) | [Technologies](#technologies) | [Installation](#installation) | [Usage](#usage) | [Testing](#testing)
+[Introduction](#introduction) | [Technologies](#technologies) | [Installation](#installation) | [Usage](#usage) | [Testing](#testing)| [Retrospective](#retrospective) | [DeepDive](#deepdive)
+
+
 
 ## Introduction
 This is a application written in Node.js using the Express framework, tested in Mocha, Chai, Moxios.
@@ -124,3 +126,91 @@ Outputs: account guids ordered by balance
 - ran with ``` npm test ``` there are 36 tests, testing all functions used in the application as well as testing all applicable routes.
 ![Imgur](https://imgur.com/M1eLsTb.png)
 ![Imgur](https://imgur.com/wBw6qap.png)
+
+## Retrospective
+
+- Fully completed all epic stories and bonus stories to a high degree with testing.
+- Code is clean and readable and user friendly readMe
+- Overall I'm really happy with how I tackled the project and the end result.  Feedback always weclomed!
+
+## DeepDive
+
+- Here we go for a in depth look at the code, going through the app files and an in depth look at how the code works to achieve the application outcome.
+
+## services/apiServices.js
+- The apiServices file contains a simple function ```getFromAxios``` to call API end points, using the node package Axios and returning the result of the request on success.
+![Imgur](https://imgur.com/K54Olmg.png)
+
+## services/inMemoryApiData.js
+- This file contains the class ```InMemoryApiData``` which is created every on load of this application and used to store and manipulate the customer data that is seen in our API url endpoints.
+![Imgur](https://imgur.com/0qhSRf4.png)
+
+# Function in depth look:
+- ```getDataFromApi```
+- This function requires the ```getFromAxios``` function and uses it to make an api call to the baseUrl (defined in ```config.json``` as the AWS link) and takes a parameter customerId to make an API call to recieve customer data depending on which customer GUID is entered.  The response is then saved to ```this.responseData```.
+![Imgur](https://imgur.com/7x0Nv51.png)
+
+- ```getAccountHolderBalance```
+- This function takes an account GUID as a paramter then using ```lodash``` iterates over the data found in ```this.responseData``` to return the balance for the account matching that GUID.
+![Imgur](https://imgur.com/5GBSBhd.png)
+
+- ```getAccountHolderDetails```
+- This function takes an account GUID as a parameter then using ```lodash``` iterates over the data found in ```this.responseData``` to return firstname, lastname, email, telephone details matching that account GUID.
+![Imgur](https://imgur.com/MmKJ1sh.png)
+
+- ```getAccountsOverdrawn```
+- This function uses ```lodash``` to iterate over the data and return a list of all account ids who have overdrawn balances.
+![Imgur](https://imgur.com/fXBBsVr.png)
+
+- ```getAccountForCustomerView```
+- This function takes an account GUID as a parameter then using ```lodash``` iterates over the data found in ```this.responseData``` to return firstname, lastname, email, balance details matching that account GUID for a customer viewpoint.
+![Imgur](https://imgur.com/5FBl98i.png)
+
+- ```getAccountByFirstOrLastName```
+- This function takes two optional parameters, firstName and lastName, then based on if either parameter is present using ```lodash``` it iterates over the data finding if the parameters input match any of the first and/or last names in the data and returns those account GUID ids.
+![Imgur](https://imgur.com/1wWWqJW.png)
+
+- ```getAccountByBestMatchedFirstOrLastName```
+- This function takes two optional parameters, firstName and lastName, then based on if either parameter is present using ```lodash``` it iterates over the data finding names that are up to a 50% confidence match to the input parameters.  This is evaluated using the node package ```stringSimilarity```.  The accounts returned have the following data structure: Confidence metric, input first name, input last name, possible first name, possible last name, id for account.  Using more ```lodash``` we order the account data by how high the confidence metric is and then we order it by highest confidence using ```.reverse()```
+![Imgur](https://imgur.com/UnyZE8q.png)
+
+- ```getAccountByName```
+- This function takes two optional parameters, firstName and lastName and combines ```getAccountByFirstOrLastName``` & ```getAccountByBestMatchedFirstOrLastName``` and evaluates which function should be used.  If ```getAccountByFirstOrLastName``` does not return anything then logically the first and last name parameters are passed on to ```getAccountByBestMatchedFirstOrLastName```.
+- Logically I could remove ```getAccountByFirstOrLastName``` and let ```getAccountByBestMatchedFirstOrLastName``` handle all name filtering but felt it necessary to keep both as a design choice.
+![Imgur](https://imgur.com/9YpWyNC.png)
+
+- ```getNoCommasAndPutToFloat```
+- This function iterates over the account data in ```this.responseData``` and using ```REGEX``` removes every occurance of a comma ',' in the balance field for accounts and then turns it from a string to a floating integer.
+![Imgur](https://imgur.com/Cnz4mVr.png)
+
+- ```getAccountFilteredByBalance```
+- This function takes two optional parameters, minAmount and maxAmount, using the above function to set the balance data to the correct format then using ```lodash``` filters through the data where balance is between the min and max amount parameters.
+![Imgur](https://imgur.com/t318bGU.png)
+
+## routes/index.js
+- This file contains all the routes used for the API and the logic behind what is displayed at each one, using the functions defined above in the ```InMemoryApiData``` class.
+![Imgur](https://imgur.com/NaFxjjk.png)
+
+# Function in depth look:
+- ```GET('/')```
+- This is the base application route, it just returns a message defined in our ```config.json``` file.
+![Imgur](https://imgur.com/HR5QjUI.png)
+
+- ```GET('/:customerId')```
+- This route allows the user to pass a customer GUID into the url, using this customerId parameter it passes the guid to the ```inMemoryApiData``` class instance (defined at the top of the file) and makes a request to the API. The response is then returned.
+![Imgur](https://imgur.com/W7jPnjl.png)
+
+- ```GET('/:customerId/balance/:accountId')```
+- This route takes the customerId and accountId parameters and calls the api for that customerID data.  Then using that data uses ```inMemoryApiData.getAccountHolderBalance``` to return an account GUIDs balance.
+![Imgur](https://imgur.com/OaiXiKv.png)
+
+- ```GET('/:customerId/details/:accountId')```
+- This route takes the customerId and accountId parameters and calls the api for that customerID data. Then using that data uses ```inMemoryApiData.getAccountHolderDetails```
+to return the specific accounts details.
+![Imgur](https://imgur.com/I8qcFhg.png)
+
+- ```GET('/:customerId/accounts/overdrawn')```
+- This route takes the customerId parameters and calls the api for that customerID data.  Then using that data uses ```inMemoryApiData.getAccountsOverdrawn()``` to return the specific accounts who are overdrawn in their balance.
+![Imgur](https://imgur.com/kmsGYOh.png)
+
+![Imgur](https://imgur.com/NaFxjjk.png)

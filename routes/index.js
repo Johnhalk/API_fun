@@ -10,7 +10,7 @@ let stubResponse = stubData.accounts
 let baseUrl = config.baseUrl
 let inMemoryApiData = new InMemoryApiData
 
-//GET initial customer base data
+//GET config message
 router.get('/', async function (req, res) {
   res.send(config.message)
 });
