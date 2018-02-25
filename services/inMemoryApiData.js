@@ -95,13 +95,15 @@ class InMemoryApiData {
         }
     }
 
-    // Get account details filtered by first name and/or last name whena name is partial or mispelt
+    // Get account details filtered by first name and/or last name when a name is partial or mispelt and displayed in order of confidence metric
     getAccountByBestMatchedFirstOrLastName(firstName = '', lastName = '') {
         if (firstName != '' && lastName != '') {
             const userByFirstName = _.filter(this.responseData, function (o) { return stringSimilarity.compareTwoStrings(firstName, o.firstname) >= 0.5 });
             const resultByLastName = _.filter(userByFirstName, function (o) { return stringSimilarity.compareTwoStrings(lastName, o.lastname) >= 0.5 });
             const output = _.map(resultByLastName, function (item) {
                 return {
+                    "confidenceMetric": (stringSimilarity.compareTwoStrings(firstName, item.firstname)
+                        + stringSimilarity.compareTwoStrings(lastName, item.lastname)) / 2*100 +'%',
                     "inputFirstName": firstName,
                     "inputLastName": lastName,
                     "possibleFirstName": item.firstname,
@@ -109,12 +111,16 @@ class InMemoryApiData {
                     "id": item.id
                 }
             });
-            return output
+            const sortByMax = _.orderBy(output, function (o) {
+                return o.confidenceMetric
+            });
+            return sortByMax.reverse()
 
         } else if (firstName != '') {
             const result = _.filter(this.responseData, function (o) { return stringSimilarity.compareTwoStrings(firstName, o.firstname) >= 0.5 });
             const output = _.map(result, function (item) {
                 return {
+                    "confidenceMetric": stringSimilarity.compareTwoStrings(firstName, item.firstname)*100 +'%',
                     "inputFirstName": firstName,
                     "inputLastName": lastName,
                     "possibleFirstName": item.firstname,
@@ -122,11 +128,16 @@ class InMemoryApiData {
                     "id": item.id
                 }
             });
-            return output
+            const sortByMax = _.orderBy(output, function (o) {
+                return o.confidenceMetric
+            });
+            return sortByMax.reverse()
+
         } else if (lastName != '') {
             const result = _.filter(this.responseData, function (o) { return stringSimilarity.compareTwoStrings(lastName, o.lastname) >= 0.5 });
             const output = _.map(result, function (item) {
                 return {
+                    "confidenceMetric": stringSimilarity.compareTwoStrings(lastName, item.lastname)*100 +'%',
                     "inputFirstName": firstName,
                     "inputLastName": lastName,
                     "possibleFirstName": item.firstname,
@@ -134,7 +145,11 @@ class InMemoryApiData {
                     "id": item.id
                 }
             });
-            return output
+            const sortByMax = _.orderBy(output, function (o) {
+                return o.confidenceMetric
+            });
+            return sortByMax.reverse()
+
         } else {
             return []
         }

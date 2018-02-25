@@ -297,6 +297,9 @@
                             "type": "array",
                             "items": {
                                 "properties": {
+                                    "confidenceMetric" {
+                                        "type": "string"
+                                    },
                                     "inputFirstName": {
                                         "type": "string"
                                     },

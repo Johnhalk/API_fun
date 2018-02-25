@@ -172,6 +172,7 @@ describe('InMemoryApiData', () => {
         it('should return any accounts matching a first name entry on 50%+ confidence metric', () => {
             expect(inMemoryApiData.getAccountByBestMatchedFirstOrLastName('cur')).toEqual(
                 [{
+                    "confidenceMetric": "57.14285714285714%",
                     "id": "0391a1cc-2c00-47b8-9880-aa9fe96bef51",
                     "inputFirstName": "cur",
                     "inputLastName": "",
@@ -182,6 +183,7 @@ describe('InMemoryApiData', () => {
         it('should return any accounts matching a partial last name entryon 50%+ confidence metric', () => {
             expect(inMemoryApiData.getAccountByBestMatchedFirstOrLastName('', 'davi')).toEqual(
                 [{
+                    "confidenceMetric": "85.71428571428571%",
                     "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0a",
                     "inputFirstName": "",
                     "inputLastName": "davi",
@@ -189,6 +191,7 @@ describe('InMemoryApiData', () => {
                     "possibleLastName": "David",
                 },
                 {
+                    "confidenceMetric": "50%",
                     "id": "fcecddff-a895-4612-bf87-2961d6ba8934",
                     "inputFirstName": "",
                     "inputLastName": "davi",
@@ -199,6 +202,7 @@ describe('InMemoryApiData', () => {
         it('should return any accounts matching a partial first and last name entryon 50%+ confidence metric', () => {
             expect(inMemoryApiData.getAccountByBestMatchedFirstOrLastName('sizay', 'chay')).toEqual(
                 [{
+                    "confidenceMetric": "58.33333333333333%",
                     "id": "861fc585-3313-4928-891d-c8711dfe3f8a",
                     "inputFirstName": "sizay",
                     "inputLastName": "chay",
@@ -220,6 +224,7 @@ describe('InMemoryApiData', () => {
         it('will return a name if there are any partial matches', () => {
             expect(inMemoryApiData.getAccountByName('giana', 'Muller')).toEqual(
                 [{
+                    "confidenceMetric": "86.36363636363636%",
                     "id": "0dafb276-1620-42ce-bbc5-477209733d5c",
                     "inputFirstName": "giana",
                     "inputLastName": "Muller",
