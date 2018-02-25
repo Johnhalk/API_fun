@@ -327,7 +327,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Gets account details based on optional minamount  and or lastname maxamount",
+                "summary": "Gets account details based on optional minamount and or maxamount",
                 "description": "Returns the accounts matching minamount and or maxamount.",
                 "parameters": [
                     {

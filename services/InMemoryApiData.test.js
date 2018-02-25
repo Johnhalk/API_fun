@@ -269,28 +269,28 @@ describe('InMemoryApiData', () => {
             inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountFilteredByBalance("8000")).toEqual(
                 [{
-                    "balance": 8759.84,
-                    "id": "861fc585-3313-4928-891d-c8711dfe3f8a"
-                },
-                {
                     "balance": 9029.43,
                     "id": "02fb54d8-12f4-452e-886c-24fe0219c1b6"
-                },
-                {
-                    "balance": 8577.01,
-                    "id": "06d1dc7a-2f0d-4c7d-a90e-c4c6fa27edce"
                 },
                 {
                     "balance": 8891.14,
                     "id": "17442e15-01e1-4dd6-867e-45521a6be455"
                 },
                 {
-                    "balance": 8280.49,
-                    "id": "6ff3f22f-a69a-4798-aea4-39db4f525a8e"
+                    "balance": 8759.84,
+                    "id": "861fc585-3313-4928-891d-c8711dfe3f8a"
                 },
                 {
                     "balance": 8614.14,
                     "id": "1d10dd00-1015-468f-a6fb-bc264531be54"
+                },
+                {
+                    "balance": 8577.01,
+                    "id": "06d1dc7a-2f0d-4c7d-a90e-c4c6fa27edce"
+                },
+                {
+                    "balance": 8280.49,
+                    "id": "6ff3f22f-a69a-4798-aea4-39db4f525a8e"
                 }]);
         });
         it('should filter through account data based on a maximum balance amount', () => {
@@ -301,21 +301,21 @@ describe('InMemoryApiData', () => {
                     "id": "c35832f6-a634-41f1-9dd4-942116dd5297"
                 },
                 {
-                    "balance": -9771.71,
-                    "id": "0a712644-9fad-4934-85b9-41745e5b4e27"
+                    "balance": -9472.41,
+                    "id": "fc5d79dc-d1da-4553-a139-1d6fa828c7d4"
                 },
                 {
                     "balance": -9532.24,
                     "id": "310323bf-f3db-475f-94fc-9f800ae4acc3"
                 },
                 {
-                    "balance": -9876.81,
-                    "id": "062d13f6-c2c8-4839-beab-f2044fc6c5e3"
+                    "balance": -9771.71,
+                    "id": "0a712644-9fad-4934-85b9-41745e5b4e27"
                 },
                 {
-                    "balance": -9472.41,
-                    "id": "fc5d79dc-d1da-4553-a139-1d6fa828c7d4"
-                }])
+                    "balance": -9876.81,
+                    "id": "062d13f6-c2c8-4839-beab-f2044fc6c5e3"
+                }]);
         });
         it('should filter through account data based on given minimum and a maximum balance amount', () => {
             inMemoryApiData.responseData = stubData.accounts
@@ -325,46 +325,45 @@ describe('InMemoryApiData', () => {
                     "id": "5cc050a1-702e-4cbd-9b56-4da534fe84b8"
                 },
                 {
-                    "balance": 6456.71,
-                    "id": "be35cf33-6363-4418-9195-412073550867"
-                },
-                {
                     "balance": 6947.18,
                     "id": "41f97f86-ff9b-49de-8476-035ed2c4121c"
-                },
-                {
-                    "balance": 6141.92,
-                    "id": "a4e55874-8d68-4695-be9f-bdbddc5e0abf"
-                },
-                {
-                    "balance": 5566.46,
-                    "id": "62692686-0e56-4a90-8dfe-85b021c9ab14"
                 },
                 {
                     "balance": 6658.94,
                     "id": "73d5789f-2524-4389-99d0-953872c071a7"
                 },
                 {
-                    "balance": 5242.4,
-                    "id": "200ab890-53e8-4cd5-a8b5-6dfd8b1ec6df"
-                },
-                {
-                    "balance": 5401.79,
-                    "id": "be9b2a8b-e846-4365-8d5f-0fca4ef9aefb"
+                    "balance": 6456.71,
+                    "id": "be35cf33-6363-4418-9195-412073550867"
                 },
                 {
                     "balance": 6181.2,
                     "id": "065136cf-7d0a-4496-8896-7979234c58fb"
                 },
                 {
+                    "balance": 6141.92,
+                    "id": "a4e55874-8d68-4695-be9f-bdbddc5e0abf"
+                },
+                {
                     "balance": 5970.9,
                     "id": "be0438bf-8b0d-4c57-913d-fcafb0bb41f0"
                 },
                 {
+                    "balance": 5566.46,
+                    "id": "62692686-0e56-4a90-8dfe-85b021c9ab14"
+                },
+                {
                     "balance": 5469.47,
                     "id": "ebd186dc-16ad-4a83-bda8-fca8b4aa2e34"
-                }])
-
+                },
+                {
+                    "balance": 5401.79,
+                    "id": "be9b2a8b-e846-4365-8d5f-0fca4ef9aefb"
+                },
+                {
+                    "balance": 5242.4,
+                    "id": "200ab890-53e8-4cd5-a8b5-6dfd8b1ec6df"
+                }]);
         });
     });
 });

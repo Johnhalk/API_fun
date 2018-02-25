@@ -161,16 +161,18 @@ class InMemoryApiData {
     // Get account details filtered by amount in balance
     getAccountFilteredByBalance(minAmount = '', maxAmount = '') {
         if (minAmount != '' && maxAmount != '') {
-            const filterMinimum = _.filter(this.getNoCommasAndPutToFloat(), function (n) { return n.balance >= minAmount })
-            const filtered = _.filter(filterMinimum, function (n) { return n.balance <= maxAmount })
-            return filtered
+            const filterMinimum = _.filter(this.getNoCommasAndPutToFloat(), function (o) { return o.balance >= minAmount })
+            const filtered = _.filter(filterMinimum, function (o) { return o.balance <= maxAmount })
+            const sortByMax = _.orderBy(filtered, function (o) { return o.balance })
+            return sortByMax.reverse()
         } else if (minAmount != '') {
             const result = _.filter(this.getNoCommasAndPutToFloat(), function (o) { return o.balance >= minAmount });
-            return result
-
+            const sortByMax = _.orderBy(result, function (o) { return o.balance })
+            return sortByMax.reverse()
         } else if (maxAmount != '') {
             const result = _.filter(this.getNoCommasAndPutToFloat(), function (o) { return o.balance <= maxAmount });
-            return result
+            const sortByMax = _.orderBy(result, function (o) { return o.balance })
+            return sortByMax.reverse()
 
         } else {
             return []
