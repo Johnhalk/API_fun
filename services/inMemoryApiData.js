@@ -32,7 +32,7 @@ class InMemoryApiData {
         const userAccount = _.filter(this.responseData, function (o) { return o.id == accountId });
         const output = _.map(userAccount, function (item) {
             return { "balance": item.balance }
-        })
+        });
         return output
     }
 
@@ -41,7 +41,7 @@ class InMemoryApiData {
         const userAccount = _.filter(this.responseData, function (o) { return o.id == accountId });
         const output = _.map(userAccount, function (item) {
             return { "First Name": item.firstname, "Last Name": item.lastname, "Email": item.email, "Telephone": item.telephone }
-        })
+        });
         return output
 
     }
@@ -60,7 +60,7 @@ class InMemoryApiData {
         const userAccount = _.filter(this.responseData, function (o) { return o.id == accountId });
         const output = _.map(userAccount, function (item) {
             return { "First Name": item.firstname, "Last Name": item.lastname, "Email": item.email, "Balance": item.balance }
-        })
+        });
         return output
 
     }
@@ -72,41 +72,86 @@ class InMemoryApiData {
             const resultByLastName = _.filter(userByFirstName, function (o) { return o.lastname.toLowerCase() == lastName.toLowerCase() });
             const output = _.map(resultByLastName, function (item) {
                 return { "id": item.id }
-            })
+            });
             return output
 
         } else if (firstName != '') {
-            const result = _.filter(this.responseData, function (o) { return o.firstname.toLowerCase() == firstName.toLocaleLowerCase() });
+            const result = _.filter(this.responseData, function (o) { return o.firstname.toLowerCase() == firstName.toLowerCase() });
             const output = _.map(result, function (item) {
                 return { "id": item.id }
-            })
+            });
             return output
 
         } else if (lastName != '') {
             const result = _.filter(this.responseData, function (o) { return o.lastname.toLowerCase() == lastName.toLowerCase() });
             const output = _.map(result, function (item) {
                 return { "id": item.id }
-            })
+            });
             return output
 
         } else {
-            return
+            return []
         }
     }
 
-    //Remove commas from balance strings and turns them into integers
+    // Get account details filtered by first name and/or last name when partially spelling name
+    getAccountByPartialFirstOrLastName(firstName = '', lastName = '') {
+        if (firstName != '' && lastName != '') {
+            const userByFirstName = _.filter(this.responseData, function (o) { return o.firstname.toLowerCase().match(new RegExp(firstName)) });
+            const resultByLastName = _.filter(userByFirstName, function (o) { return o.lastname.toLowerCase().match(new RegExp(lastName)) });
+            const output = _.map(resultByLastName, function (item) {
+                return {
+                    "inputFirstName": firstName,
+                    "inputLastName": lastName,
+                    "possibleFirstName": item.firstname,
+                    "possibleLastName": item.lastname,
+                    "id": item.id
+                }
+            })
+            return output
+
+        } else if (firstName != '') {
+            const result = _.filter(this.responseData, function (o) { return o.firstname.toLowerCase().match(new RegExp(firstName)) });
+            const output = _.map(result, function (item) {
+                return {
+                    "inputFirstName": firstName,
+                    "inputLastName": lastName,
+                    "possibleFirstName": item.firstname,
+                    "possibleLastName": item.lastname,
+                    "id": item.id
+                }
+            });
+            return output
+        } else if (lastName != '') {
+            const result = _.filter(this.responseData, function (o) { return o.lastname.toLowerCase().match(new RegExp(lastName)) });
+            const output = _.map(result, function (item) {
+                return {
+                    "inputFirstName": firstName,
+                    "inputLastName": lastName,
+                    "possibleFirstName": item.firstname,
+                    "possibleLastName": item.lastname,
+                    "id": item.id
+                }
+            });
+            return output
+        } else {
+            return []
+        }
+    }
+
+    // Remove commas from balance strings and turns them into integers
     getNoCommasAndPutToFloat() {
         const removeCommasFromBalance = _.map(this.responseData, function (item) {
             return { "id": item.id, "balance": parseFloat((item.balance.toString().replace(/,/g, ''))) }
-        })
+        });
         return removeCommasFromBalance
     }
 
     // Get account details filtered by amount in balance
     getAccountFilteredByBalance(minAmount = '', maxAmount = '') {
         if (minAmount != '' && maxAmount != '') {
-            const filterMinimum = _.filter(this.getNoCommasAndPutToFloat(), function(n) {return n.balance >= minAmount})
-            const filtered = _.filter(filterMinimum, function(n) {return n.balance <= maxAmount})
+            const filterMinimum = _.filter(this.getNoCommasAndPutToFloat(), function (n) { return n.balance >= minAmount })
+            const filtered = _.filter(filterMinimum, function (n) { return n.balance <= maxAmount })
             return filtered
         } else if (minAmount != '') {
             const result = _.filter(this.getNoCommasAndPutToFloat(), function (o) { return o.balance >= minAmount });
@@ -117,7 +162,7 @@ class InMemoryApiData {
             return result
 
         } else {
-            return
+            return []
         }
     }
 }

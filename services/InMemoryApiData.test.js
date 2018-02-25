@@ -171,6 +171,50 @@ describe('InMemoryApiData', () => {
                     "id": "0dafb276-1620-42ce-bbc5-477209733d5c"
                 }]);
         });
+        it('should return an empty array if no results found', () => {
+            inMemoryApiData.responseData = stubData.accounts
+            expect(inMemoryApiData.getAccountByFirstOrLastName('zoop', 'derloop')).toEqual([])
+        });
+    });
+
+    describe('getAccountByPartialFirstOrLastName', () => {
+        it('should return any accounts matching a partial first name entry', () => {
+            inMemoryApiData.responseData = stubData.accounts
+            expect(inMemoryApiData.getAccountByPartialFirstOrLastName('cur')).toEqual(
+                [{
+                    "id": "0391a1cc-2c00-47b8-9880-aa9fe96bef51",
+                    "inputFirstName": "cur",
+                    "inputLastName": "",
+                    "possibleFirstName": "Curtis",
+                    "possibleLastName": "Cotton"
+                }]);
+        });
+        it('should return any accounts matching a partial last name entry', () => {
+            inMemoryApiData.responseData = stubData.accounts
+            expect(inMemoryApiData.getAccountByPartialFirstOrLastName('davi')).toEqual(
+                [{
+                    "id": "6ad4a7d2-307d-413a-82c5-115c8321eede",
+                    "inputFirstName": "davi",
+                    "inputLastName": "",
+                    "possibleFirstName": "Davian",
+                    "possibleLastName": "Sanford"
+                }]);
+        });
+        it('should return any accounts matching a partial first and last name entry', () => {
+            inMemoryApiData.responseData = stubData.accounts
+            expect(inMemoryApiData.getAccountByPartialFirstOrLastName('izay', 'hay')).toEqual(
+                [{
+                    "id": "861fc585-3313-4928-891d-c8711dfe3f8a",
+                    "inputFirstName": "izay",
+                    "inputLastName": "hay",
+                    "possibleFirstName": "Izayah",
+                    "possibleLastName": "Hayden"
+                }]);
+        });
+        it('should return an empty array if no results found', () => {
+            inMemoryApiData.responseData = stubData.accounts
+            expect(inMemoryApiData.getAccountByPartialFirstOrLastName('zoop', 'derloop')).toEqual([])
+        });
     });
 
     describe('getNoCommasAndPutToFloat', () => {
@@ -183,11 +227,12 @@ describe('InMemoryApiData', () => {
                     "lastname": "Pruitt",
                     "telephone": "01526 810866",
                     "balance": "5,436.98"
-                },
-                ];
+                }]
             expect(inMemoryApiData.getNoCommasAndPutToFloat(inMemoryApiData.responseData)).toEqual(
-                [{ "balance": 5436.98, "id": "0dafb276-1620-42ce-bbc5-477209733d5c" }]
-            )
+                [{
+                    "balance": 5436.98,
+                    "id": "0dafb276-1620-42ce-bbc5-477209733d5c"
+                }]);
         });
     });
 

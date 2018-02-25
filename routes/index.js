@@ -26,16 +26,16 @@ router.get('/:customerid', async function (req, res) {
 
 //GET account balance based on accountID
 router.get('/balance/:accountId', async function (req, res) {
-  await inMemoryApiData.getDataFromApi(customerId)
   let accountId = req.params.accountId
+  await inMemoryApiData.getDataFromApi(customerId)
   let balance = inMemoryApiData.getAccountHolderBalance(accountId)
   res.send(balance)
 });
 
 //GET account details based on accountID
 router.get('/details/:accountId', async function (req, res) {
-  await inMemoryApiData.getDataFromApi(customerId)
   let accountId = req.params.accountId
+  await inMemoryApiData.getDataFromApi(customerId)
   let accountDetails = inMemoryApiData.getAccountHolderDetails(accountId)
   res.send(accountDetails)
 });
