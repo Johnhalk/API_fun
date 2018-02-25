@@ -14,7 +14,6 @@ describe('App', function () {
     let customerId = config.baseCustomerId
     let accountId = '06d1dc7a-2f0d-4c7d-a90e-c4c6fa27edce'
 
-
     beforeEach(() => {
         moxios.install()
         const expectedResults = stubData
@@ -39,7 +38,6 @@ describe('App', function () {
                 .get('/')
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
-                    expect(res.body[0]).to.have.property('id')
                     done()
                 });
         });
@@ -57,10 +55,10 @@ describe('App', function () {
         });
     });
 
-    describe('GET /balance/:accountId', function () {
+    describe('GET /:customerid/balance/:accountId', function () {
         it('responds with status 200', function (done) {
             chai.request(app)
-                .get(`/balance/${accountId}`)
+                .get(`/${customerId}/balance/${accountId}`)
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
                     expect(res.body[0]).to.have.property('balance')
@@ -69,10 +67,10 @@ describe('App', function () {
         });
     });
 
-    describe('GET /details/:accountId', function () {
+    describe('GET /:customerid/details/:accountId', function () {
         it('responds with status 200', function (done) {
             chai.request(app)
-                .get(`/details/${accountId}`)
+                .get(`/${customerId}/details/${accountId}`)
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
                     expect(res.body[0]).to.have.property('First Name')
@@ -84,10 +82,10 @@ describe('App', function () {
         });
     });
 
-    describe('GET /accounts/overdrawn', function () {
+    describe('GET /:customerid/accounts/overdrawn', function () {
         it('responds with status 200', function (done) {
             chai.request(app)
-                .get('/accounts/overdrawn')
+                .get(`/${customerId}/accounts/overdrawn`)
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
                     expect(res.body[0]).to.have.property('id')
@@ -96,10 +94,10 @@ describe('App', function () {
         });
     });
 
-    describe('GET /customer/details/:accountId', function () {
+    describe('GET /:customerid/customer/details/:accountId', function () {
         it('responds with status 200', function (done) {
             chai.request(app)
-                .get(`/customer/details/${accountId}`)
+                .get(`/${customerId}/customer/details/${accountId}`)
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
                     expect(res.body[0]).to.have.property('First Name')
@@ -111,11 +109,11 @@ describe('App', function () {
         });
     });
 
-    describe('GET /customer/account', function () {
+    describe('GET /:customerid/customer/account', function () {
         it('responds with status 200 with just firstname parameter', function (done) {
             let firstName = 'GiAna'
             chai.request(app)
-                .get(`/customer/account?firstname=${firstName}`)
+                .get(`/${customerId}/customer/account?firstname=${firstName}`)
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
                     expect(res.body[0]).to.have.property('id')
@@ -126,7 +124,7 @@ describe('App', function () {
         it('responds with status 200 with just lastname parameter', function (done) {
             let lastName = 'David'
             chai.request(app)
-                .get(`/customer/account?lastname=${lastName}`)
+                .get(`/${customerId}/customer/account?lastname=${lastName}`)
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
                     expect(res.body[0]).to.have.property('id')
@@ -138,7 +136,7 @@ describe('App', function () {
             let firstName = 'Curtis'
             let lastName = 'COTTON'
             chai.request(app)
-                .get(`/customer/account?firstname=${firstName}&lastname=${lastName}`)
+                .get(`/${customerId}/customer/account?firstname=${firstName}&lastname=${lastName}`)
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
                     expect(res.body[0]).to.have.property('id')
@@ -147,11 +145,11 @@ describe('App', function () {
         });
     });
 
-    describe('GET /customer/account/balance', function () {
+    describe('GET /:customerid/customer/account/balance', function () {
         it('responds with status 200 with just minamount parameter', function (done) {
             let minAmount = '100'
             chai.request(app)
-                .get(`/customer/account/balance?minamount=${minAmount}`)
+                .get(`/${customerId}/customer/account/balance?minamount=${minAmount}`)
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
                     expect(res.body[0]).to.have.property('id')
@@ -162,7 +160,7 @@ describe('App', function () {
         it('responds with status 200 with just maxamount parameter', function (done) {
             let maxAmount = '200'
             chai.request(app)
-                .get(`/customer/account/balance?maxamount=${maxAmount}`)
+                .get(`/${customerId}/customer/account/balance?maxamount=${maxAmount}`)
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
                     expect(res.body[0]).to.have.property('id')
@@ -174,7 +172,7 @@ describe('App', function () {
             let minAmount = '100'
             let maxAmount = '200'
             chai.request(app)
-                .get(`/customer/account/balance?minamount=${minAmount}&maxamount=${maxAmount}`)
+                .get(`/${customerId}/customer/account/balance?minamount=${minAmount}&maxamount=${maxAmount}`)
                 .end(function (err, res) {
                     expect(res).to.have.status(200);
                     expect(res.body[0]).to.have.property('id')

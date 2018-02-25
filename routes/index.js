@@ -9,23 +9,22 @@ const express = require('express'),
 let stubResponse = stubData.accounts
 let baseUrl = config.baseUrl
 let inMemoryApiData = new InMemoryApiData
-let customerId = config.baseCustomerId
 
 //GET initial customer base data
 router.get('/', async function (req, res) {
-  await inMemoryApiData.getDataFromApi(customerId)
-  res.send(inMemoryApiData.responseData)
+  res.send(config.message)
 });
 
 //GET new customer data based on customer guid
-router.get('/:customerid', async function (req, res) {
-  customerId = req.params.customerid
+router.get('/:customerId', async function (req, res) {
+  let customerId = req.params.customerId
   await inMemoryApiData.getDataFromApi(customerId)
   res.send(inMemoryApiData.responseData)
 });
 
 //GET account balance based on accountID
-router.get('/balance/:accountId', async function (req, res) {
+router.get('/:customerId/balance/:accountId', async function (req, res) {
+  let customerId = req.params.customerId
   let accountId = req.params.accountId
   await inMemoryApiData.getDataFromApi(customerId)
   let balance = inMemoryApiData.getAccountHolderBalance(accountId)
@@ -33,7 +32,8 @@ router.get('/balance/:accountId', async function (req, res) {
 });
 
 //GET account details based on accountID
-router.get('/details/:accountId', async function (req, res) {
+router.get('/:customerId/details/:accountId', async function (req, res) {
+  let customerId = req.params.customerId
   let accountId = req.params.accountId
   await inMemoryApiData.getDataFromApi(customerId)
   let accountDetails = inMemoryApiData.getAccountHolderDetails(accountId)
@@ -41,14 +41,16 @@ router.get('/details/:accountId', async function (req, res) {
 });
 
 //GET account data whose balance is overdrawn
-router.get('/accounts/overdrawn', async function (req, res) {
+router.get('/:customerId/accounts/overdrawn', async function (req, res) {
+  let customerId = req.params.customerId
   await inMemoryApiData.getDataFromApi(customerId)
   let overdrawn = inMemoryApiData.getAccountsOverdrawn()
   res.send(overdrawn)
 });
 
 //GET account details for a customer view
-router.get('/customer/details/:accountid', async function (req, res) {
+router.get('/:customerId/customer/details/:accountid', async function (req, res) {
+  let customerId = req.params.customerId
   let accountId = req.params.accountid
   await inMemoryApiData.getDataFromApi(customerId)
   let accountDetails = inMemoryApiData.getAccountForCustomerView(accountId)
@@ -57,7 +59,8 @@ router.get('/customer/details/:accountid', async function (req, res) {
 });
 
 //GET account details based on firstname and or lastname
-router.get('/customer/account', async function (req, res) {
+router.get('/:customerId/customer/account', async function (req, res) {
+  let customerId = req.params.customerId
   let firstName = req.query.firstname
   let lastName = req.query.lastname
   await inMemoryApiData.getDataFromApi(customerId)
@@ -66,7 +69,8 @@ router.get('/customer/account', async function (req, res) {
 });
 
 //GET account details whose balance is filtered by a min amount and max amount
-router.get('/customer/account/balance', async function (req, res) {
+router.get('/:customerId/customer/account/balance', async function (req, res) {
+  let customerId = req.params.customerId
   let minAmount = req.query.minamount
   let maxAmount = req.query.maxamount
   await inMemoryApiData.getDataFromApi(customerId)

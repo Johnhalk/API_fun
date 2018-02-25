@@ -19,34 +19,15 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Gets all current customer information",
-                "description": "Returns a list containing all accounts for that customer.",
+                "summary": "Base url to inform that a customer guid is necessary to access information via the url",
+                "description": "Simple base url page which just informs the user they need to enter a customer guid into the url to access their account information.",
                 "responses": {
                     "200": {
-                        "description": "A list of accounts based on customer guid",
+                        "description": "Simple base url page which just informs the user they need to enter a customer guid into the url to access their account information.",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "properties": {
-                                    "id": {
-                                        "type": "string"
-                                    },
-                                    "firstname": {
-                                        "type": "string"
-                                    },
-                                    "lastname": {
-                                        "type": "string"
-                                    },
-                                    "email": {
-                                        "type": "string"
-                                    },
-                                    "telephone": {
-                                        "type": "string"
-                                    },
-                                    "balance": {
-                                        "type": "string"
-                                    }
-                                }
+                                "properties": {}
                             }
                         }
                     }
@@ -61,8 +42,8 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Gets all customer information based on customerid",
-                "description": "Returns a list containing all accounts for that customer.",
+                "summary": "Gets all customer information based on customer guid",
+                "description": "Returns a list containing all accounts for that customer guid.",
                 "parameters": [
                     {
                         "name": "customerid",
@@ -103,7 +84,7 @@
                 }
             }
         },
-        "/balance/{accountid}": {
+        "/{customerid}/balance/{accountid}": {
             "get": {
                 "tags": [
                     "API routes"
@@ -112,8 +93,14 @@
                     "application/json"
                 ],
                 "summary": "Gets balance of specific account based on account guid",
-                "description": "Returns a list containing all accounts for that customer.",
+                "description": "Returns a list containing the balance of a specific account guid inside a customer guid.",
                 "parameters": [
+                    {
+                        "name": "customerid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "name": "accountid",
                         "in": "path",
@@ -138,7 +125,7 @@
                 }
             }
         },
-        "/details/{accountid}": {
+        "/{customerid}/details/{accountid}": {
             "get": {
                 "tags": [
                     "API routes"
@@ -147,8 +134,14 @@
                     "application/json"
                 ],
                 "summary": "Gets account details based on account guid",
-                "description": "Returns a list containing all accounts for that customer.",
+                "description": "Returns a list containing account infromation for specific account guid for that customer guid.",
                 "parameters": [
+                    {
+                        "name": "customerid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "name": "accountid",
                         "in": "path",
@@ -158,7 +151,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Returns details of specific account",
+                        "description": "Returns a list containing account infromation for specific account guid for that customer guid.",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -182,7 +175,7 @@
                 }
             }
         },
-        "/accounts/overdrawn": {
+        "/{customerid}/accounts/overdrawn": {
             "get": {
                 "tags": [
                     "API routes"
@@ -190,8 +183,16 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Returns overdrawn accounts that are currently in the stored customer guid",
-                "description": "Returns a list containing all accounts for that customer.",
+                "summary": "Gets overdrawn accounts that are currently in the stored customer guid",
+                "description": "Gets a list of overdrawn accounts for customer guid.",
+                "parameters": [
+                    {
+                        "name": "customerid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "A list of IDs with accounts overdrawn",
@@ -209,7 +210,7 @@
                 }
             }
         },
-        "/customer/details/{accountid}": {
+        "/{customerid}/customer/details/{accountid}": {
             "get": {
                 "tags": [
                     "API routes"
@@ -217,9 +218,15 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Gets account details based on account guid for customer view",
-                "description": "Returns a list containing all accounts for that customer.",
+                "summary": "Gets account details based on account guid for a customer view",
+                "description": "Returns account information for specific account guid available for that customer.",
                 "parameters": [
+                    {
+                        "name": "customerid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "name": "accountid",
                         "in": "path",
@@ -253,7 +260,7 @@
                 }
             }
         },
-        "/customer/account": {
+        "/{customerid}/customer/account": {
             "get": {
                 "tags": [
                     "API routes"
@@ -264,6 +271,12 @@
                 "summary": "Gets account details based on optional firstname  and or lastname parameters",
                 "description": "Returns the accounts matching firstname and or lastname.",
                 "parameters": [
+                    {
+                        "name": "customerid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "name": "firstname",
                         "in": "query",
@@ -279,27 +292,24 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Returns details of specific accounts based on first and or last name",
+                        "description": "Returns details of specific accounts based on first and or last name to a best match in input fields",
                         "schema": {
                             "type": "array",
                             "items": {
                                 "properties": {
+                                    "inputFirstName": {
+                                        "type": "string"
+                                    },
+                                    "inputLastname": {
+                                        "type": "string"
+                                    },
+                                    "possibleFirstName": {
+                                        "type": "string"
+                                    },
+                                    "possibleLastName": {
+                                        "type": "string"
+                                    },
                                     "id": {
-                                        "type": "string"
-                                    },
-                                    "firstname": {
-                                        "type": "string"
-                                    },
-                                    "lastname": {
-                                        "type": "string"
-                                    },
-                                    "email": {
-                                        "type": "string"
-                                    },
-                                    "telephone": {
-                                        "type": "string"
-                                    },
-                                    "balance": {
                                         "type": "string"
                                     }
                                 }
@@ -309,7 +319,7 @@
                 }
             }
         },
-        "/customer/account/balance": {
+        "/{customerid}/customer/account/balance": {
             "get": {
                 "tags": [
                     "API routes"
@@ -320,6 +330,12 @@
                 "summary": "Gets account details based on optional minamount  and or lastname maxamount",
                 "description": "Returns the accounts matching minamount and or maxamount.",
                 "parameters": [
+                    {
+                        "name": "customerid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "name": "minamount",
                         "in": "query",
