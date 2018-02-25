@@ -1,7 +1,8 @@
 const getFromAxios = require("./apiServices"),
     stubData = require("../stubData/stubData.json"),
     config = require('../config.json'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    stringSimilarity = require('string-similarity');
 
 let baseUrl = config.baseUrl
 
@@ -94,11 +95,11 @@ class InMemoryApiData {
         }
     }
 
-    // Get account details filtered by first name and/or last name when partially spelling name
-    getAccountByPartialFirstOrLastName(firstName = '', lastName = '') {
+    // Get account details filtered by first name and/or last name whena name is partial or mispelt
+    getAccountByBestMatchedFirstOrLastName(firstName = '', lastName = '') {
         if (firstName != '' && lastName != '') {
-            const userByFirstName = _.filter(this.responseData, function (o) { return o.firstname.toLowerCase().match(new RegExp(firstName)) });
-            const resultByLastName = _.filter(userByFirstName, function (o) { return o.lastname.toLowerCase().match(new RegExp(lastName)) });
+            const userByFirstName = _.filter(this.responseData, function (o) { return stringSimilarity.compareTwoStrings(firstName, o.firstname) >= 0.5 });
+            const resultByLastName = _.filter(userByFirstName, function (o) { return stringSimilarity.compareTwoStrings(lastName, o.lastname) >= 0.5 });
             const output = _.map(resultByLastName, function (item) {
                 return {
                     "inputFirstName": firstName,
@@ -107,11 +108,11 @@ class InMemoryApiData {
                     "possibleLastName": item.lastname,
                     "id": item.id
                 }
-            })
+            });
             return output
 
         } else if (firstName != '') {
-            const result = _.filter(this.responseData, function (o) { return o.firstname.toLowerCase().match(new RegExp(firstName)) });
+            const result = _.filter(this.responseData, function (o) { return stringSimilarity.compareTwoStrings(firstName, o.firstname) >= 0.5 });
             const output = _.map(result, function (item) {
                 return {
                     "inputFirstName": firstName,
@@ -123,7 +124,7 @@ class InMemoryApiData {
             });
             return output
         } else if (lastName != '') {
-            const result = _.filter(this.responseData, function (o) { return o.lastname.toLowerCase().match(new RegExp(lastName)) });
+            const result = _.filter(this.responseData, function (o) { return stringSimilarity.compareTwoStrings(lastName, o.lastname) >= 0.5 });
             const output = _.map(result, function (item) {
                 return {
                     "inputFirstName": firstName,
@@ -136,6 +137,16 @@ class InMemoryApiData {
             return output
         } else {
             return []
+        }
+    }
+
+    //Function for getting name combining two name filtering functions to use on route
+    getAccountByName(firstName = '', lastName = '') {
+        if (this.getAccountByFirstOrLastName(firstName, lastName) == '') {
+            let output = this.getAccountByBestMatchedFirstOrLastName(firstName, lastName)
+            return output
+        } else {
+            return this.getAccountByFirstOrLastName(firstName, lastName)
         }
     }
 

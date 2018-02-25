@@ -24,6 +24,7 @@
     "request": "^2.83.0",
     "serve-favicon": "~2.4.5",
     "sinon": "^4.3.0",
+    "string-similarity": "^1.2.0",
     "swagger-ui-express": "^2.0.15"
   }
 }

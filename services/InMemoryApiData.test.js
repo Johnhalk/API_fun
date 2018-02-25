@@ -177,10 +177,10 @@ describe('InMemoryApiData', () => {
         });
     });
 
-    describe('getAccountByPartialFirstOrLastName', () => {
-        it('should return any accounts matching a partial first name entry', () => {
+    describe('getAccountByBestMatchedFirstOrLastName', () => {
+        it('should return any accounts matching a first name entry on 50%+ confidence metric', () => {
             inMemoryApiData.responseData = stubData.accounts
-            expect(inMemoryApiData.getAccountByPartialFirstOrLastName('cur')).toEqual(
+            expect(inMemoryApiData.getAccountByBestMatchedFirstOrLastName('cur')).toEqual(
                 [{
                     "id": "0391a1cc-2c00-47b8-9880-aa9fe96bef51",
                     "inputFirstName": "cur",
@@ -189,32 +189,60 @@ describe('InMemoryApiData', () => {
                     "possibleLastName": "Cotton"
                 }]);
         });
-        it('should return any accounts matching a partial last name entry', () => {
+        it('should return any accounts matching a partial last name entryon 50%+ confidence metric', () => {
             inMemoryApiData.responseData = stubData.accounts
-            expect(inMemoryApiData.getAccountByPartialFirstOrLastName('davi')).toEqual(
+            expect(inMemoryApiData.getAccountByBestMatchedFirstOrLastName('', 'davi')).toEqual(
                 [{
-                    "id": "6ad4a7d2-307d-413a-82c5-115c8321eede",
-                    "inputFirstName": "davi",
-                    "inputLastName": "",
-                    "possibleFirstName": "Davian",
-                    "possibleLastName": "Sanford"
+                    "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0a",
+                    "inputFirstName": "",
+                    "inputLastName": "davi",
+                    "possibleFirstName": "Cyrus",
+                    "possibleLastName": "David",
+                },
+                {
+                    "id": "fcecddff-a895-4612-bf87-2961d6ba8934",
+                    "inputFirstName": "",
+                    "inputLastName": "davi",
+                    "possibleFirstName": "Dane",
+                    "possibleLastName": "Travis"
                 }]);
         });
-        it('should return any accounts matching a partial first and last name entry', () => {
+        it('should return any accounts matching a partial first and last name entryon 50%+ confidence metric', () => {
             inMemoryApiData.responseData = stubData.accounts
-            expect(inMemoryApiData.getAccountByPartialFirstOrLastName('izay', 'hay')).toEqual(
+            expect(inMemoryApiData.getAccountByBestMatchedFirstOrLastName('sizay', 'chay')).toEqual(
                 [{
                     "id": "861fc585-3313-4928-891d-c8711dfe3f8a",
-                    "inputFirstName": "izay",
-                    "inputLastName": "hay",
+                    "inputFirstName": "sizay",
+                    "inputLastName": "chay",
                     "possibleFirstName": "Izayah",
                     "possibleLastName": "Hayden"
                 }]);
         });
-        it('should return an empty array if no results found', () => {
+        it('should return an empty array if no results matching found on 50%+ confidence metric', () => {
             inMemoryApiData.responseData = stubData.accounts
-            expect(inMemoryApiData.getAccountByPartialFirstOrLastName('zoop', 'derloop')).toEqual([])
+            expect(inMemoryApiData.getAccountByBestMatchedFirstOrLastName('iz', 'zz')).toEqual([])
         });
+    });
+
+    describe('getAccountByName', () => {
+        it('will return a name if there are any matches in customer data', () => {
+            inMemoryApiData.responseData = stubData.accounts
+            expect(inMemoryApiData.getAccountByName('Giana', 'Mueller')).toEqual(
+                [{ "id": "0dafb276-1620-42ce-bbc5-477209733d5c" }]
+            )
+        });
+        it('will return a name if there are any partial matches', () => {
+            inMemoryApiData.responseData = stubData.accounts
+            expect(inMemoryApiData.getAccountByName('giana', 'Muller')).toEqual(
+                [{
+                    "id": "0dafb276-1620-42ce-bbc5-477209733d5c",
+                    "inputFirstName": "giana",
+                    "inputLastName": "Muller",
+                    "possibleFirstName": "Giana",
+                    "possibleLastName": "Mueller"
+                }]
+            )
+        })
     });
 
     describe('getNoCommasAndPutToFloat', () => {
