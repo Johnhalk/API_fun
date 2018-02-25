@@ -1,5 +1,5 @@
 # Customer_API_Handler
-[Introduction](#introduction) | [Technologies](#technologies) | [Installation](#installation) | [Usage](#usage) |
+[Introduction](#introduction) | [Technologies](#technologies) | [Installation](#installation) | [Usage](#usage) | [Testing](#testing)
 
 ## Introduction
 This is a application written in Node.js using the Express framework, tested in Mocha, Chai, Moxios.
