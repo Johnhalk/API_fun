@@ -10,6 +10,7 @@ describe('InMemoryApiData', () => {
     beforeEach(() => {
         moxios.install()
         inMemoryApiData = new InMemoryApiData
+        inMemoryApiData.responseData = stubData.accounts
     });
 
     afterEach(() => {
@@ -36,7 +37,6 @@ describe('InMemoryApiData', () => {
 
     describe('getAccountHolderBalance', () => {
         it('should filter through the customer data to return accounts whose balance is less than or equal to zero', () => {
-            inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountHolderBalance('1c436428-73bb-46c4-adc9-cd5f2c7d34b4')).toEqual(
                 [
                     { "balance": "-945.55" }
@@ -46,7 +46,6 @@ describe('InMemoryApiData', () => {
 
     describe('getAccountHolderDetails', () => {
         it('should filter through the customer data to return the accounts email, firstname, lastname and telephone', () => {
-            inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountHolderDetails('1c436428-73bb-46c4-adc9-cd5f2c7d34b4')).toEqual(
                 [{
                     "Email": "Lil.PRU8222@mailinator.com",
@@ -60,7 +59,6 @@ describe('InMemoryApiData', () => {
 
     describe('getAccountsOverdrawn', () => {
         it('should filter through the customer data to return accounts whose balance is less than or equal to zero', () => {
-            inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountsOverdrawn()).toEqual(
                 [{ "id": "0391a1cc-2c00-47b8-9880-aa9fe96bef51" },
                 { "id": "0dafb276-1620-42ce-bbc5-477209733d5c" },
@@ -127,7 +125,6 @@ describe('InMemoryApiData', () => {
 
     describe('getAccountForCustomerView', () => {
         it('should filter through an accounts data using its guid to return the accounts email, firstname, lastname and balance', () => {
-            inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountForCustomerView('1c436428-73bb-46c4-adc9-cd5f2c7d34b4')).toEqual(
                 [{
                     "Email": "Lil.PRU8222@mailinator.com",
@@ -141,7 +138,6 @@ describe('InMemoryApiData', () => {
 
     describe('getAccountByFirstOrLastName', () => {
         it('should filter through account data based on a firstname', () => {
-            inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountByFirstOrLastName('Cyrus')).toEqual(
                 [{
                     "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0a",
@@ -149,14 +145,12 @@ describe('InMemoryApiData', () => {
                 ]);
         });
         it('should filter through account data based on a lastname', () => {
-            inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountByFirstOrLastName('', 'David')).toEqual(
                 [{
                     "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0a",
                 }]);
         });
         it('should filter through account data based on a first and lastname', () => {
-            inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountByFirstOrLastName('Giana', 'Mueller')).toEqual(
                 [{
                     "id": "0dafb276-1620-42ce-bbc5-477209733d5c"
@@ -164,21 +158,18 @@ describe('InMemoryApiData', () => {
         });
 
         it('should filter through account data based on a first and lastname regardless of case sensitvity', () => {
-            inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountByFirstOrLastName('GIANA', 'MueLLer')).toEqual(
                 [{
                     "id": "0dafb276-1620-42ce-bbc5-477209733d5c"
                 }]);
         });
         it('should return an empty array if no results found', () => {
-            inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountByFirstOrLastName('zoop', 'derloop')).toEqual([])
         });
     });
 
     describe('getAccountByBestMatchedFirstOrLastName', () => {
         it('should return any accounts matching a first name entry on 50%+ confidence metric', () => {
-            inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountByBestMatchedFirstOrLastName('cur')).toEqual(
                 [{
                     "id": "0391a1cc-2c00-47b8-9880-aa9fe96bef51",
@@ -189,7 +180,6 @@ describe('InMemoryApiData', () => {
                 }]);
         });
         it('should return any accounts matching a partial last name entryon 50%+ confidence metric', () => {
-            inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountByBestMatchedFirstOrLastName('', 'davi')).toEqual(
                 [{
                     "id": "8a28f09a-c234-4a95-b1e0-cdbc68979d0a",
@@ -207,7 +197,6 @@ describe('InMemoryApiData', () => {
                 }]);
         });
         it('should return any accounts matching a partial first and last name entryon 50%+ confidence metric', () => {
-            inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountByBestMatchedFirstOrLastName('sizay', 'chay')).toEqual(
                 [{
                     "id": "861fc585-3313-4928-891d-c8711dfe3f8a",
@@ -218,20 +207,17 @@ describe('InMemoryApiData', () => {
                 }]);
         });
         it('should return an empty array if no results matching found on 50%+ confidence metric', () => {
-            inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountByBestMatchedFirstOrLastName('iz', 'zz')).toEqual([])
         });
     });
 
     describe('getAccountByName', () => {
         it('will return a name if there are any matches in customer data', () => {
-            inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountByName('Giana', 'Mueller')).toEqual(
                 [{ "id": "0dafb276-1620-42ce-bbc5-477209733d5c" }]
             )
         });
         it('will return a name if there are any partial matches', () => {
-            inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountByName('giana', 'Muller')).toEqual(
                 [{
                     "id": "0dafb276-1620-42ce-bbc5-477209733d5c",
@@ -265,7 +251,6 @@ describe('InMemoryApiData', () => {
 
     describe('getAccountFilteredByBalance', () => {
         it('should filter through account data based on a minimum balance amount', () => {
-            inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountFilteredByBalance("8000")).toEqual(
                 [{
                     "balance": 9029.43,
@@ -293,7 +278,6 @@ describe('InMemoryApiData', () => {
                 }]);
         });
         it('should filter through account data based on a maximum balance amount', () => {
-            inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountFilteredByBalance("", "-9000")).toEqual(
                 [{
                     "balance": -9101.73,
@@ -317,7 +301,6 @@ describe('InMemoryApiData', () => {
                 }]);
         });
         it('should filter through account data based on given minimum and a maximum balance amount', () => {
-            inMemoryApiData.responseData = stubData.accounts
             expect(inMemoryApiData.getAccountFilteredByBalance("5000.00", "7000.00")).toEqual(
                 [{
                     "balance": 6989.31,
