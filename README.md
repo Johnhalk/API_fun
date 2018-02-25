@@ -122,7 +122,7 @@ Outputs: account guids ordered by balance
 
 ## Testing
 
-- Technologies used to test are Mocha, Chai, Sinon & Moxios.
+- Technologies used to test are Mocha, Chai, Sinon & Moxios. Tested against realistic stubbed data in stubData.json file.
 - ran with ``` npm test ``` there are 36 tests, testing all functions used in the application as well as testing all applicable routes.
 ![Imgur](https://imgur.com/M1eLsTb.png)
 ![Imgur](https://imgur.com/wBw6qap.png)
@@ -136,6 +136,18 @@ Outputs: account guids ordered by balance
 ## DeepDive
 
 - Here we go for a in depth look at the code, going through the app files and an in depth look at how the code works to achieve the application outcome.
+
+## app.js
+- The app file is where the application starts. It contains all the logic that brings the application together. Here we define the port the localhost application runs on, the url for swagger routes, the url for our main API routes index, the view engine used to render our Error.html page if there is an error.
+![Imgur](https://imgur.com/cS74err.png)
+
+## package.json
+- A file detailing all our node package dependencies as well as scripts to run and test the application from the command line.
+![Imgur](https://imgur.com/RJoCwux.png)
+
+## config.json
+- A simple config file that is used throughout the application. Containing our baseUrl, a base customer ID to use if necessary and our initial message at the root of our application.
+![Imgur](https://imgur.com/idt3xlP.png)
 
 ## services/apiServices.js
 - The apiServices file contains a simple function ```getFromAxios``` to call API end points, using the node package Axios and returning the result of the request on success.
@@ -197,7 +209,7 @@ Outputs: account guids ordered by balance
 ![Imgur](https://imgur.com/HR5QjUI.png)
 
 - ```GET('/:customerId')```
-- This route allows the user to pass a customer GUID into the url, using this customerId parameter it passes the guid to the ```inMemoryApiData``` class instance (defined at the top of the file) and makes a request to the API. The response is then returned.
+- This route allows the user to pass a customer GUID into the url, using this customerId parameter it passes the guid to the ```inMemoryApiData``` class instance (defined at the top of the file) and makes a request to the API and the response is then returned.
 ![Imgur](https://imgur.com/W7jPnjl.png)
 
 - ```GET('/:customerId/balance/:accountId')```
@@ -213,4 +225,18 @@ to return the specific accounts details.
 - This route takes the customerId parameters and calls the api for that customerID data.  Then using that data uses ```inMemoryApiData.getAccountsOverdrawn()``` to return the specific accounts who are overdrawn in their balance.
 ![Imgur](https://imgur.com/kmsGYOh.png)
 
-![Imgur](https://imgur.com/NaFxjjk.png)
+- ```GET('/:customerId/customer/details/:accountid')```
+- This route takes the customerId and accountId parameters and calls the api for that customerID data. Then using that data uses ```inMemoryApiData.getAccountForCustomerView``` to return data for a specific account GUID intended for a customer viewpoint.
+![Imgur](https://imgur.com/8QbJzeW.png)
+
+- ```GET('/:customerId/customer/account')```
+- This route takes the customerId and calls the api for that customerID data. It also takes in two optional query parameters ```firstname``` and ```lastname```. Then using that data uses ```inMemoryApiData.getAccountByName``` to return specific accounts based on the firstname and lastname query parameters in the url.
+![Imgur](https://imgur.com/jFMoJxO.png)
+
+- ```GET('/:customerId/customer/account/balance')```
+- This route takes the customerId and calls the api for that customerID data. It also takes in two option query parameters ```minamount``` and ```maxamount```. Then using that data uses ```inMemoryApiData.getAccountFilteredByBalance``` to return all accounts within the minamount and/or maxamount parameters.
+![Imgur](https://imgur.com/3Thkp28.png)
+
+## swagger.json
+- This file contains all the setup for our swagger routes defined at ```http://localhost:3000/swagger-api```.  It should be well documented that you can explore each route just by reading the descriptions. Give it a whirl!!
+![Imgur](https://imgur.com/u3Kkxj8.png)

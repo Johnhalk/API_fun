@@ -55,7 +55,6 @@ router.get('/:customerId/customer/details/:accountid', async function (req, res)
   await inMemoryApiData.getDataFromApi(customerId)
   let accountDetails = inMemoryApiData.getAccountForCustomerView(accountId)
   res.send(accountDetails)
-
 });
 
 //GET account details based on firstname and or lastname
