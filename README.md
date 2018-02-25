@@ -48,7 +48,7 @@ Outputs: account guids ordered by balance
 
 ## Technologies:
 - Node.js
-- Express server
+- Express framework
 - ES6 Javascript
 - Axios for API requests
 - Async for asynchronous functions
