@@ -71,7 +71,7 @@ Outputs: account guids ordered by balance
 ![Imgur](https://imgur.com/LAkRjy5.png)
 - Application starts at localhost:3000
 - (GET /)
-![Imgur](https://imgur.com/wUfJtRH.png)
+![Imgur](https://imgur.com/FneWlTN.png)
 - Place your customer GUID in the url to access data on all accounts for that customer.
 - (GET /customerId)
 ![Imgur](https://imgur.com/ZmE9Z9P.png)
